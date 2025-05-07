@@ -4,4 +4,10 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = "==3.13.3"
-dependencies = []
+dependencies = [
+  "fastapi>=0.110.0",
+  "python-multipart>=0.0.20",
+  "torch>=2.7.0",
+  "ultralytics>=8.3.127",
+  "uvicorn>=0.34.2",
+]
