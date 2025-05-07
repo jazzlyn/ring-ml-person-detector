@@ -27,6 +27,10 @@ A Python application that filters Ring camera images to keep only those containi
 - [Getting Started](#getting-started)
   - [Prerequisties](#prerequisties)
   - [Initialize repository](#initialize-repository)
+- [Usage](#usage)
+  - [Running the API](#running-the-api)
+  - [API Endpoints](#api-endpoints)
+  - [Response Format](#response-format)
 - [Known Issues](#known-issues)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -49,6 +53,72 @@ pre-commit framework needs to get initialized.
 
 ```shell
 task pre-commit:init
+```
+
+install dependencies
+
+```shell
+uv sync
+```
+
+activate venv
+
+```shell
+source .venv/bin/activate
+```
+
+## Usage
+
+### Running the API
+
+Run the API server:
+
+```shell
+uv run src/inference.py
+```
+
+This will start the API server at `http://localhost:8000`.
+
+### API Endpoints
+
+#### Health Check
+
+```console
+GET /
+```
+
+Returns a simple health check response.
+
+#### Person Detection
+
+```console
+POST /detect
+```
+
+Submit an image file to check if a person is present.
+
+Example with curl:
+
+```shell
+curl -X POST http://localhost:8000/detect \
+  -F "file=@image.jpg"
+```
+
+### Response Format
+
+```json
+{
+  "filename": "image.jpg",
+  "person_detected": true,
+  "confidence": 0.92,
+  "num_persons": 1,
+  "person_boxes": [
+    {
+      "confidence": 0.92,
+      "bbox": [120.5, 250.8, 380.2, 520.6]
+    }
+  ]
+}
 ```
 
 ## Known Issues
