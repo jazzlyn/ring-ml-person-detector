@@ -5,7 +5,6 @@ Provides REST endpoints for processing images and detecting people.
 
 import logging
 import signal
-import threading
 import uvicorn
 
 from fastapi import FastAPI, UploadFile, File
@@ -20,8 +19,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Flag to track shutdown state
-is_shutting_down = threading.Event()
+# Application state variable
+# Possible values: "initializing", "ready", "shutting_down"
+state = "initializing"
 
 # Global variables for configuration and model
 config_manager = None
@@ -34,11 +34,11 @@ async def lifespan(app: FastAPI):
     Lifespan context manager for the FastAPI application.
     Handles startup and shutdown events.
     """
-    global config_manager, detector_model
+    global config_manager, detector_model, state
 
     # Startup logic
     logger.info("Application starting up")
-    is_shutting_down.clear()  # Ensure we start in a ready state
+    state = "initializing"
 
     # Load configuration and model once at startup
     try:
@@ -52,6 +52,7 @@ async def lifespan(app: FastAPI):
             classes_to_detect=config_manager.get_classes_to_detect(),
         )
         logger.info("Model loaded successfully")
+        state = "ready"
     except Exception as e:
         logger.error(f"Error during initialization: {e}")
         # Continue initialization, but the readiness check will fail
@@ -62,12 +63,18 @@ async def lifespan(app: FastAPI):
 
     def sigterm_handler(sig, frame):
         """Handle SIGTERM by marking app as not ready before shutdown"""
+        global state
         logger.info("Received SIGTERM. Starting graceful shutdown...")
-        is_shutting_down.set()  # Set the shutdown flag to fail readiness checks
-        logger.info("Readiness probes now failing, completing requests...")
+        state = "shutting_down"  # Update app state to fail readiness checks
+        logger.info("Readiness probes now failing, completing current requests...")
 
-        # Allow some time for requests and K8s to notice readiness state change
-        threading.Timer(10, original_sigterm_handler, args=[sig, frame]).start()
+        # Give Kubernetes time to recognize the readiness change (10 seconds)
+        # but no threading is needed, we can just proceed to call the original handler
+        logger.info("Initiating shutdown sequence...")
+        # Call original handler to perform the actual shutdown
+        original_sigterm_handler(sig, frame)
+
+    signal.signal(signal.SIGTERM, sigterm_handler)
 
     signal.signal(signal.SIGTERM, sigterm_handler)
 
@@ -78,6 +85,7 @@ async def lifespan(app: FastAPI):
     signal.signal(signal.SIGINT, original_sigint_handler)
 
     # Shutdown logic
+    state = "shutting_down"
     logger.info("Application shutting down")
 
 
@@ -98,8 +106,8 @@ async def liveness():
 @app.get("/readyz")
 async def readiness():
     """Kubernetes readiness probe endpoint."""
-    # Fail readiness check if we're shutting down
-    if is_shutting_down.is_set():
+    # Fail readiness check if we're shutting down or initializing
+    if state != "ready":
         return Response(status_code=503)
 
     # Fail readiness check if model didn't load
@@ -114,7 +122,7 @@ async def readiness():
 async def detect_person(file: UploadFile = File(...)):
     """Detect if a person is present in the uploaded image."""
     # Fail if application is shutting down
-    if is_shutting_down.is_set():
+    if state != "ready":
         return Response(status_code=503)
 
     # Fail if model isn't loaded
@@ -138,8 +146,8 @@ async def detect_person(file: UploadFile = File(...)):
 
 if __name__ == "__main__":
     # Get server configuration
-    temp_config = ConfigurationManager()
-    server_config = temp_config.get_server_config()
+    manager = ConfigurationManager()
+    server_config = manager.get_server_config()
 
     # Start server
     uvicorn.run(
