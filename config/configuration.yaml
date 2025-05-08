@@ -1,0 +1,26 @@
+---
+# Ring Camera Person Detector Configuration
+
+# Server Settings
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true
+
+# Model Configuration
+model:
+  size: small # Options: nano, small, medium, large, xlarge
+  device: cpu # Options: cpu, cuda, mps
+  custom_model_path: null # Set to path if using custom model
+  models_dir: ./models # Directory for storing models
+
+inference:
+  conf_threshold: 0.25 # Confidence threshold for detections (0.0 to 1.0)
+  iou_threshold: 0.45 # IoU threshold for NMS (0.0 to 1.0)
+  max_detections: 300 # Max detections per image
+  img_size: 640 # Input image size (multiple of 32)
+  half_precision: false # Use FP16 for faster inference on supported GPUs
+
+# Classes of interest (COCO dataset class indices)
+# 0: person - leave as is if you only want to detect people
+classes_to_detect: [0]
