@@ -1,0 +1,8 @@
+{
+  extends: [
+    "github>techtales-io/renovate-config:base.json5",
+    "github>techtales-io/renovate-config:python.json5",
+    "github>techtales-io/renovate-config//github-actions/silent-automerge.json5",
+    "github>techtales-io/renovate-config//pre-commit/silent-automerge.json5",
+  ],
+}
