@@ -774,12 +774,12 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fastapi", specifier = ">=0.110.0" },
-    { name = "pylint", specifier = ">=3.3.7" },
-    { name = "python-multipart", specifier = ">=0.0.20" },
-    { name = "torch", specifier = ">=2.7.0" },
-    { name = "ultralytics", specifier = ">=8.3.127" },
-    { name = "uvicorn", specifier = ">=0.34.2" },
+    { name = "fastapi", specifier = "==0.115.12" },
+    { name = "pylint", specifier = "==3.3.7" },
+    { name = "python-multipart", specifier = "==0.0.20" },
+    { name = "torch", specifier = "==2.7.0" },
+    { name = "ultralytics", specifier = "==8.3.127" },
+    { name = "uvicorn", specifier = "==0.34.2" },
 ]
 
 [[package]]
