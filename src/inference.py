@@ -4,14 +4,14 @@ Provides REST endpoints for processing images and detecting people.
 """
 
 import logging
-import uvicorn
-
-from fastapi import FastAPI, UploadFile, File
-from fastapi import Response
 from contextlib import asynccontextmanager
+from enum import Enum
+
+import uvicorn
+from fastapi import FastAPI, UploadFile, File, Response
+
 from model import PersonDetector
 from config import ConfigurationManager
-from enum import Enum
 
 # Configure logging
 logging.basicConfig(
@@ -22,6 +22,8 @@ logger = logging.getLogger(__name__)
 
 # Define application state as an Enum
 class AppState(Enum):
+    """Enum representing the application's operational state."""
+
     INITIALIZING = "initializing"
     READY = "ready"
     SHUTTING_DOWN = "shutting_down"
@@ -39,7 +41,7 @@ async def load_model(config_manager: ConfigurationManager) -> PersonDetector:
         raise ValueError("Configuration not loaded")
 
     logger.info("Initializing model")
-    model = PersonDetector(
+    model = PersonDetector(  # pylint: disable=redefined-outer-name
         model_config=config_manager.get_model_config(),
         inference_config=config_manager.get_inference_config(),
         classes_to_detect=config_manager.get_classes_to_detect(),
@@ -49,23 +51,22 @@ async def load_model(config_manager: ConfigurationManager) -> PersonDetector:
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(
+    app: FastAPI,
+):  # pylint: disable=redefined-outer-name,disable=unused-argument
     """
     Lifespan context manager for the FastAPI application.
     Handles startup and shutdown events.
     """
-    global model, state
+    global model, state  # pylint: disable=global-statement
 
     # Startup logic
-    logger.info("Application starting up")
     state = AppState.INITIALIZING
 
     # Load configuration
-    logger.info("Loading configuration")
     config = ConfigurationManager()
 
     # Load model with configuration
-    logger.info("Loading model")
     model = await load_model(config)
 
     state = AppState.READY
@@ -74,7 +75,6 @@ async def lifespan(app: FastAPI):
 
     # Shutdown logic
     state = AppState.SHUTTING_DOWN
-    logger.info("Application shutting down")
 
 
 # Create FastAPI app
@@ -125,21 +125,20 @@ async def detect_person(file: UploadFile = File(...)):
         results = model.detect_persons(image_data=image_bytes, filename=file.filename)
         return results
 
-    except Exception as e:
-        logger.error(f"Error processing image: {str(e)}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error processing image: %s", str(e))
         return Response(status_code=500)
 
 
 if __name__ == "__main__":
     # Load configuration
-    logger.info("Loading configuration")
-    config = ConfigurationManager().get_server_config()
+    server_config = ConfigurationManager().get_server_config()
 
     # Start server
     uvicorn.run(
         "inference:app",
-        host=config.get("host", "0.0.0.0"),
-        port=config.get("port", 8000),
-        reload=config.get("reload", True),
+        host=server_config.get("host", "0.0.0.0"),
+        port=server_config.get("port", 8000),
+        reload=server_config.get("reload", True),
         log_level="info",
     )

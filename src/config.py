@@ -49,14 +49,14 @@ class ConfigurationManager:
             FileNotFoundError: If configuration file does not exist
             Exception: If configuration loading fails
         """
-        logger.info(f"Loading configuration from {self.config_path}")
+        logger.info("Loading configuration from %s", self.config_path)
 
         if not self.config_path.exists():
-            logger.error(f"Configuration file {self.config_path} not found.")
+            logger.error("Configuration file %s not found.", self.config_path)
             raise FileNotFoundError(f"Configuration file {self.config_path} not found.")
 
         try:
-            with open(self.config_path, "r") as f:
+            with open(self.config_path, "r", encoding="utf-8") as f:
                 config = yaml.safe_load(f)
 
             if not config:
@@ -68,7 +68,7 @@ class ConfigurationManager:
             logger.info("Configuration loaded successfully")
             return config
         except Exception as e:
-            logger.error(f"Error loading configuration: {e}")
+            logger.error("Error loading configuration: %s", e)
             raise
 
     def get_server_config(self) -> Dict[str, Any]:

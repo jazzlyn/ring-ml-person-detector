@@ -126,7 +126,6 @@ class PersonDetector:
             self.model.predict(
                 torch.zeros(1, 3, 640, 640).to(self.device), **self.model_params
             )
-            logger.info("Model loaded successfully")
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
             raise
