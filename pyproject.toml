@@ -9,6 +9,6 @@ dependencies = [
   "pylint==3.3.7",
   "python-multipart==0.0.20",
   "torch==2.7.0",
-  "ultralytics==8.3.141",
+  "ultralytics==8.3.144",
   "uvicorn==0.34.2",
 ]
