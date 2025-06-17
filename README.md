@@ -61,10 +61,22 @@ install dependencies
 uv sync
 ```
 
+upgrade dependencies
+
+```shell
+uv sync --upgrade
+```
+
 activate venv
 
 ```shell
 source .venv/bin/activate
+```
+
+reset venv
+
+```shell
+uv sync --reinstall
 ```
 
 ## Usage
