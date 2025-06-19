@@ -8,10 +8,10 @@ from contextlib import asynccontextmanager
 from enum import Enum
 
 import uvicorn
-from fastapi import FastAPI, UploadFile, File, Response
+from fastapi import FastAPI, File, Response, UploadFile
 
-from model import PersonDetector
 from config import ConfigurationManager
+from model import PersonDetector
 
 # Configure logging
 logging.basicConfig(

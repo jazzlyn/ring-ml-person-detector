@@ -5,13 +5,13 @@ This module handles the loading and configuration of the YOLOv8 model.
 
 import logging
 import os
-from typing import Union, Dict, Any
+from typing import Any, Dict, Union
 
-import torch
-from ultralytics import YOLO
-import numpy as np
 import cv2
+import numpy as np
+import torch
 from PIL import Image
+from ultralytics import YOLO
 
 # Configure logging
 logging.basicConfig(
