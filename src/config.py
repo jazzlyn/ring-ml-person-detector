@@ -3,10 +3,10 @@ Configuration management for Ring Camera Person Detection.
 Loads configuration from YAML file specified by environment variable.
 """
 
-import os
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 import yaml
 

@@ -61,6 +61,12 @@ install dependencies
 uv sync
 ```
 
+install dev dependencies
+
+```shell
+uv sync --dev
+```
+
 upgrade dependencies
 
 ```shell
