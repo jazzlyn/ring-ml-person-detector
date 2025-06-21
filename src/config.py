@@ -11,9 +11,7 @@ from typing import Any, Dict, Optional
 import yaml
 
 # configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG_PATH = os.path.join("config", "configuration.yaml")
@@ -61,9 +59,7 @@ class ConfigurationManager:
 
             if not config:
                 logger.error("Empty configuration file or invalid YAML.")
-                raise ValueError(
-                    "Configuration file is empty or contains invalid YAML."
-                )
+                raise ValueError("Configuration file is empty or contains invalid YAML.")
 
             logger.info("Configuration loaded successfully")
             return config
@@ -83,8 +79,6 @@ class ConfigurationManager:
         """Get inference configuration."""
         return self.config.get("inference", {})
 
-    def get_classes_to_detect(self) -> list:
+    def get_classes_to_detect(self) -> list[int]:
         """Get list of classes to detect."""
-        return self.config.get(
-            "classes_to_detect", [0]
-        )  # Default to person class (0) if not specified
+        return self.config.get("classes_to_detect", [0])  # Default to person class (0) if not specified

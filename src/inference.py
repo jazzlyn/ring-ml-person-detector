@@ -14,9 +14,7 @@ from config import ConfigurationManager
 from model import PersonDetector
 
 # Configure logging
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 
@@ -30,8 +28,8 @@ class AppState(Enum):
 
 
 # Global variables
-model: PersonDetector = None
-state: AppState = None
+model: PersonDetector | None = None
+state: AppState | None = None
 
 
 async def load_model(config_manager: ConfigurationManager) -> PersonDetector:
@@ -122,7 +120,8 @@ async def detect_person(file: UploadFile = File(...)):
         image_bytes = await file.read()
 
         # Process image through detector
-        results = model.detect_persons(image_data=image_bytes, filename=file.filename)
+        # TODO: model should handle None filename or use fallback value
+        results = model.detect_persons(image_data=image_bytes, filename=file.filename)  # type: ignore[arg-type]
         return results
 
     except Exception as e:  # pylint: disable=broad-exception-caught
