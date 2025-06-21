@@ -4,8 +4,10 @@ Provides REST endpoints for processing images and detecting people.
 """
 
 import logging
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from enum import Enum
+from typing import Annotated, Any
 
 import uvicorn
 from fastapi import FastAPI, File, Response, UploadFile
@@ -14,7 +16,10 @@ from config import ConfigurationManager
 from model import PersonDetector
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
 logger = logging.getLogger(__name__)
 
 
@@ -34,10 +39,6 @@ state: AppState | None = None
 
 async def load_model(config_manager: ConfigurationManager) -> PersonDetector:
     """Initialize and load the person detection model."""
-    if not config_manager:
-        logger.error("Cannot load model: Configuration not loaded")
-        raise ValueError("Configuration not loaded")
-
     logger.info("Initializing model")
     model = PersonDetector(  # pylint: disable=redefined-outer-name
         model_config=config_manager.get_model_config(),
@@ -50,13 +51,13 @@ async def load_model(config_manager: ConfigurationManager) -> PersonDetector:
 
 @asynccontextmanager
 async def lifespan(
-    app: FastAPI,
-):  # pylint: disable=redefined-outer-name,disable=unused-argument
+    app: FastAPI,  # noqa: ARG001, pylint: disable=redefined-outer-name,disable=unused-argument
+) -> AsyncGenerator[None, None]:
     """
     Lifespan context manager for the FastAPI application.
     Handles startup and shutdown events.
     """
-    global model, state  # pylint: disable=global-statement
+    global model, state  # noqa: PLW0603, pylint: disable=global-statement
 
     # Startup logic
     state = AppState.INITIALIZING
@@ -84,13 +85,13 @@ app = FastAPI(
 
 
 @app.get("/livez")
-async def liveness():
+async def liveness() -> Response:
     """Kubernetes liveness probe endpoint."""
     return Response(status_code=200)
 
 
 @app.get("/readyz")
-async def readiness():
+async def readiness() -> Response:
     """Kubernetes readiness probe endpoint."""
     # Fail readiness check if we're shutting down or initializing
     if state != AppState.READY:
@@ -105,7 +106,9 @@ async def readiness():
 
 
 @app.post("/detect")
-async def detect_person(file: UploadFile = File(...)):
+async def detect_person(
+    file: Annotated[UploadFile, File()],
+) -> Response | dict[str, Any]:
     """Detect if a person is present in the uploaded image."""
     # Fail if application is shutting down
     if state != AppState.READY:
@@ -115,17 +118,19 @@ async def detect_person(file: UploadFile = File(...)):
     if model is None:
         return Response(status_code=503)
 
+    # Process image through detector
     try:
         # Read image bytes
         image_bytes = await file.read()
 
         # Process image through detector
-        # TODO: model should handle None filename or use fallback value
-        results = model.detect_persons(image_data=image_bytes, filename=file.filename)  # type: ignore[arg-type]
-        return results
-
-    except Exception as e:  # pylint: disable=broad-exception-caught
-        logger.error("Error processing image: %s", str(e))
+        # FIXME: model
+        return model.detect_persons(
+            image_data=image_bytes,
+            filename=file.filename,  # type: ignore[arg-type]
+        )
+    except Exception:  # pylint: disable=broad-exception-caught
+        logger.exception("Error processing image")
         return Response(status_code=500)
 
 
@@ -136,7 +141,7 @@ if __name__ == "__main__":
     # Start server
     uvicorn.run(
         "inference:app",
-        host=server_config.get("host", "0.0.0.0"),
+        host=server_config.get("host", "0.0.0.0"),  # noqa: S104
         port=server_config.get("port", 8000),
         reload=server_config.get("reload", True),
         log_level="info",
