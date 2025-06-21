@@ -111,32 +111,36 @@ repos:
       - id: rst-inline-touching-normal
       - id: text-unicode-replacement-char
 
-  # TODO: enable
-  # - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
-  #   rev: v1.13.0
-  #   hooks:
-  #     - id: basedpyright
-
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
-        args:
-          - --config
-          - pyproject.toml
-
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.0
-    hooks:
-      - id: ruff
-        args: [--fix]
-      - id: ruff-format
-
   - repo: local
     hooks:
+      - id: basedpyright
+        name: basedpyright
+        entry: basedpyright
+        language: system
+        types: [python]
+        exclude: ^src/(model|config)\.py$
+
+      - id: black
+        name: black
+        entry: black
+        language: system
+        types: [python]
+
       - id: pylint
         name: pylint
         entry: pylint
         language: system
         types: [python]
         exclude: ^src/model\.py$ # for now
+
+      - id: ruff-check
+        name: ruff-check
+        entry: ruff check
+        language: system
+        types: [python]
+        args: [--fix]
+      - id: ruff-format
+        name: ruff-format
+        entry: ruff format
+        language: system
+        types: [python]
