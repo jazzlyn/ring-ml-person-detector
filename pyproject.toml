@@ -36,6 +36,12 @@ disable = ["fixme"]
 line-length = 120
 
 [tool.ruff.lint]
-#ignore = ["E501"]
-extend-select = ["I", "ICN"]
-#extend-select = ["ALL"]
+extend-select = ["ALL"]
+ignore = [
+  # "ANN",  # flake8-annotations
+  "FIX",  # flake8-fixme
+  "TD",   # flake8-todo
+  "D203", # 1 blank line required before class docstring
+  "D205", # 1 blank line required between summary line and description
+  "D212", # Multi-line docstring summary should start at the first line
+]
