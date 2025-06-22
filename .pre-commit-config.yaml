@@ -120,13 +120,6 @@ repos:
         types: [python]
         exclude: ^src/(model|config)\.py$
 
-      - id: black
-        name: black
-        entry: black
-        language: system
-        types: [python]
-        exclude: ^src/(model|config)\.py$
-
       - id: pylint
         name: pylint
         entry: pylint
