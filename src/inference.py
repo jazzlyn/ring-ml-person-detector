@@ -1,5 +1,6 @@
 """
 API server for Ring Camera Person Detection.
+
 Provides REST endpoints for processing images and detecting people.
 """
 
@@ -10,7 +11,7 @@ from enum import Enum
 from typing import Annotated, Any
 
 import uvicorn
-from fastapi import FastAPI, File, Response, UploadFile
+from fastapi import FastAPI, File, HTTPException, Response, UploadFile
 
 from config import ConfigurationManager
 from model import PersonDetector
@@ -55,6 +56,7 @@ async def lifespan(
 ) -> AsyncGenerator[None, None]:
     """
     Lifespan context manager for the FastAPI application.
+
     Handles startup and shutdown events.
     """
     global model, state  # noqa: PLW0603, pylint: disable=global-statement
@@ -84,22 +86,48 @@ app = FastAPI(
 )
 
 
+@app.get("/")
+async def info() -> dict[str, str]:
+    """
+    Service information endpoint.
+
+    Provides basic service metadata for monitoring and debugging.
+    """
+    return {
+        # TODO: update with dynamic values
+        "name": "Ring Camera Person Detector",
+        "version": "0.1.0",
+        "description": "API to detect if a person is in Ring camera images",
+        "python_version": "3.12.11",
+    }
+
+
 @app.get("/livez")
 async def liveness() -> Response:
-    """Kubernetes liveness probe endpoint."""
+    """
+    Kubernetes liveness probe endpoint.
+
+    Returns 200 if the service process is alive and can handle requests.
+    Should only fail if the process needs to be restarted.
+    """
     return Response(status_code=200)
 
 
 @app.get("/readyz")
 async def readiness() -> Response:
-    """Kubernetes readiness probe endpoint."""
-    # Fail readiness check if we're shutting down or initializing
-    if state != AppState.READY:
-        return Response(status_code=503)
+    """
+    Kubernetes readiness probe endpoint.
 
-    # Fail readiness check if model didn't load
+    Returns 200 when service is ready to handle requests.
+    Fails during initialization, shutdown, or when dependencies are unavailable.
+    """
+    if state != AppState.READY:
+        logger.error("Service not ready for processing, current state: %s", state)
+        raise HTTPException(status_code=503, detail="Service not ready")
+
     if model is None:
-        return Response(status_code=503)
+        logger.error("Model not loaded")
+        raise HTTPException(status_code=503, detail="Model not loaded")
 
     # All checks passed
     return Response(status_code=200)
@@ -108,30 +136,42 @@ async def readiness() -> Response:
 @app.post("/detect")
 async def detect_person(
     file: Annotated[UploadFile, File()],
-) -> Response | dict[str, Any]:
+) -> dict[str, Any]:
     """Detect if a person is present in the uploaded image."""
     # Fail if application is shutting down
     if state != AppState.READY:
-        return Response(status_code=503)
+        logger.error("Service not ready for processing, current state: %s", state)
+        raise HTTPException(status_code=503, detail="Service not ready")
 
     # Fail if model isn't loaded
     if model is None:
-        return Response(status_code=503)
+        logger.error("Model not loaded")
+        raise HTTPException(status_code=503, detail="Model not loaded")
+
+    # Read and validate image bytes
+    image_bytes = await file.read()
+    if not image_bytes:
+        logger.error("Empty file uploaded")
+        raise HTTPException(status_code=400, detail="Empty file provided")
+
+    filename = file.filename or "uploaded_image"
+    logger.info("Processing detection request for: %s (%d bytes)", filename, len(image_bytes))
 
     # Process image through detector
     try:
-        # Read image bytes
-        image_bytes = await file.read()
-
-        # Process image through detector
-        # FIXME: model
-        return model.detect_persons(
+        result = model.detect_persons(
             image_data=image_bytes,
-            filename=file.filename,  # type: ignore[arg-type]
+            filename=filename,
         )
-    except Exception:  # pylint: disable=broad-exception-caught
-        logger.exception("Error processing image")
-        return Response(status_code=500)
+    except Exception:
+        logger.exception("Unexpected error processing image")
+        raise HTTPException(
+            status_code=500,
+            detail="Internal server error during image processing",
+        ) from None
+
+    logger.info("Detection completed successfully for: %s", filename)
+    return result
 
 
 if __name__ == "__main__":
