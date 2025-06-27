@@ -3,7 +3,7 @@ name = "ring-ml-person-detector"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.12.11"
+requires-python = ">=3.12,<3.13"
 dependencies = [
   "fastapi==0.115.12",
   "python-multipart==0.0.20",
