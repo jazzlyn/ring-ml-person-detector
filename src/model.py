@@ -13,6 +13,8 @@ import torch
 from PIL import Image
 from ultralytics import YOLO
 
+from config import InferenceConfig, ModelConfig
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -33,30 +35,30 @@ class PersonDetector:
 
     def __init__(
         self,
-        model_config: Dict[str, Any],
-        inference_config: Dict[str, Any],
-        classes_to_detect: list = None,
-    ):
+        model_config: ModelConfig,
+        inference_config: InferenceConfig,
+        classes_to_detect: list[int] | None = None,
+    ) -> None:
         """
         Initialize the person detector with the specified YOLOv8 model.
 
         Args:
-            model_config: Model configuration dictionary.
-            inference_config: Inference configuration dictionary.
+            model_config: Model configuration dataclass.
+            inference_config: Inference configuration dataclass.
             classes_to_detect: List of class IDs to detect. Default is [0] (person).
         """
         # Model configuration
-        model_size = model_config.get("size", "small")
-        device = model_config.get("device", "auto")
-        custom_model_path = model_config.get("custom_model_path")
-        models_dir = model_config.get("models_dir", "./models")
+        model_size = model_config.size
+        device = model_config.device
+        custom_model_path = model_config.custom_model_path
+        models_dir = model_config.models_dir
 
         # Inference configuration
-        self.confidence_threshold = inference_config.get("conf_threshold", 0.25)
-        self.iou_threshold = inference_config.get("iou_threshold", 0.45)
-        self.max_detections = inference_config.get("max_detections", 300)
-        self.img_size = inference_config.get("img_size", 640)
-        self.half_precision = inference_config.get("half_precision", False)
+        self.confidence_threshold = inference_config.conf_threshold
+        self.iou_threshold = inference_config.iou_threshold
+        self.max_detections = inference_config.max_detections
+        self.img_size = inference_config.img_size
+        self.half_precision = inference_config.half_precision
 
         # Classes to detect (default to person only)
         self.classes_to_detect = classes_to_detect if classes_to_detect else [0]

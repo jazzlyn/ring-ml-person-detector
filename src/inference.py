@@ -13,7 +13,7 @@ from typing import Annotated, Any
 import uvicorn
 from fastapi import FastAPI, File, HTTPException, Response, UploadFile
 
-from config import ConfigurationManager
+from config import AppConfig, ConfigurationManager
 from model import PersonDetector
 
 # Configure logging
@@ -38,13 +38,14 @@ model: PersonDetector | None = None
 state: AppState | None = None
 
 
-async def load_model(config_manager: ConfigurationManager) -> PersonDetector:
+async def load_model(app_config: AppConfig) -> PersonDetector:
     """Initialize and load the person detection model."""
     logger.info("Initializing model")
+
     model = PersonDetector(  # pylint: disable=redefined-outer-name
-        model_config=config_manager.get_model_config(),
-        inference_config=config_manager.get_inference_config(),
-        classes_to_detect=config_manager.get_classes_to_detect(),
+        model_config=app_config.model,
+        inference_config=app_config.inference,
+        classes_to_detect=app_config.classes_to_detect,
     )
     logger.info("Model loaded successfully")
     return model
@@ -65,10 +66,11 @@ async def lifespan(
     state = AppState.INITIALIZING
 
     # Load configuration
-    config = ConfigurationManager()
+    config_manager = ConfigurationManager()
+    app_config = config_manager.get_config()
 
     # Load model with configuration
-    model = await load_model(config)
+    model = await load_model(app_config)
 
     state = AppState.READY
 
@@ -175,14 +177,14 @@ async def detect_person(
 
 
 if __name__ == "__main__":
-    # Load configuration
+    # Load server configuration
     server_config = ConfigurationManager().get_server_config()
 
     # Start server
     uvicorn.run(
         "inference:app",
-        host=server_config.get("host", "0.0.0.0"),  # noqa: S104
-        port=server_config.get("port", 8000),
-        reload=server_config.get("reload", True),
+        host=server_config.host,
+        port=server_config.port,
+        reload=server_config.reload,
         log_level="info",
     )
