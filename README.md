@@ -25,12 +25,18 @@ A Python application that filters Ring camera images to keep only those containi
 
 - [Code-Style](#code-style)
 - [Getting Started](#getting-started)
-  - [Prerequisties](#prerequisties)
-  - [Initialize repository](#initialize-repository)
+  - [Prerequisites](#prerequisites)
+  - [Initialization](#initialization)
+- [Configuration](#configuration)
+  - [Configuration File](#configuration-file)
+  - [Environment Variables](#environment-variables)
+  - [Model Configuration](#model-configuration)
 - [Usage](#usage)
   - [Running the API](#running-the-api)
+  - [Using Docker](#using-docker)
   - [API Endpoints](#api-endpoints)
   - [Response Format](#response-format)
+  - [Testing the API](#testing-the-api)
 - [Known Issues](#known-issues)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -42,48 +48,109 @@ A Python application that filters Ring camera images to keep only those containi
 
 ## Getting Started
 
-### Prerequisties
+### Prerequisites
 
-- [pre-commit][pre-commit-url]
-- [uv][uv-url]
+- **[uv][uv-url]**: Fast Python package manager
+- **[pre-commit][pre-commit-url]**: Git hooks framework
+- **[Task][taskfile-url]**: Task runner (optional)
 
-### Initialize repository
+### Initialization
 
-pre-commit framework needs to get initialized.
+1. **Initialize pre-commit hooks**:
 
-```shell
-task pre-commit:init
+   ```shell
+   task pre-commit:init
+   ```
+
+2. **Install dependencies**:
+
+   Production dependencies:
+
+   ```shell
+   uv sync
+   ```
+
+   Include development dependencies:
+
+   ```shell
+   uv sync --dev
+   ```
+
+   For CPU inference:
+
+   ```shell
+   uv sync --extra cpu
+   ```
+
+   For Intel XPU inference:
+
+   ```shell
+   uv sync --extra xpu
+   ```
+
+3. **Activate virtual environment**:
+
+   ```shell
+   source .venv/bin/activate
+   ```
+
+## Configuration
+
+### Configuration File
+
+The application uses `config/configuration.yaml` for all settings:
+
+```yaml
+# Server Settings
+server:
+  host: "0.0.0.0" # Bind address
+  port: 8000 # Server port
+  reload: true # Auto-reload on changes (dev only)
+
+# Model Configuration
+model:
+  size: small # Options: nano, small, medium, large, xlarge
+  device: cpu # Options: cpu, cuda, mps
+  custom_model_path: null # Path to custom model (optional)
+  models_dir: ./models # Model storage directory
+
+# Inference Settings
+inference:
+  conf_threshold: 0.25 # Detection confidence threshold (0.0-1.0)
+  iou_threshold: 0.45 # Non-maximum suppression threshold
+  max_detections: 300 # Maximum detections per image
+  img_size: 640 # Input image size (multiple of 32)
+  half_precision: false # Use FP16 for GPU acceleration
+
+# Detection Classes
+classes_to_detect: [0] # COCO class indices (0 = person)
 ```
 
-install dependencies
+### Environment Variables
+
+- **`RING_DETECTOR_CONFIG`**: Path to configuration file (default: `config/configuration.yaml`)
+
+Example:
 
 ```shell
-uv sync
+export RING_DETECTOR_CONFIG="/path/to/custom/config.yaml"
 ```
 
-install dev dependencies
+### Model Configuration
 
-```shell
-uv sync --dev
-```
+**Available Model Sizes**:
 
-upgrade dependencies
+- **nano**: Fastest, lowest accuracy (~6MB)
+- **small**: Good balance of speed/accuracy (~22MB) - **Recommended**
+- **medium**: Higher accuracy, slower (~50MB)
+- **large**: High accuracy, much slower (~100MB)
+- **xlarge**: Highest accuracy, slowest (~220MB)
 
-```shell
-uv sync --upgrade
-```
+**Device Options**:
 
-activate venv
-
-```shell
-source .venv/bin/activate
-```
-
-reset venv
-
-```shell
-uv sync --reinstall
-```
+- **cpu**: Universal compatibility
+- **cuda**: NVIDIA GPU acceleration
+- **mps**: Apple Silicon GPU acceleration
 
 ## Usage
 
@@ -92,51 +159,146 @@ uv sync --reinstall
 Run the API server:
 
 ```shell
+export RING_DETECTOR_CONFIG="config/configuration.yaml"
+export YOLO_CONFIG_DIR="/app/yolo" # writeable
 uv run src/inference.py
 ```
 
-This will start the API server at `http://localhost:8000`.
+The API server will start at `http://localhost:8000`.
+
+### Using Docker
+
+Build the Docker image:
+
+```shell
+docker buildx build --progress=plain -t ring-person-detector .
+```
+
+Run the Docker container:
+
+```shell
+docker run --rm -it \
+  -p 8000:8000 \
+  -v $(pwd)/config:/app/config \
+  -v $(pwd)/models:/app/models \
+  ring-person-detector
+```
 
 ### API Endpoints
 
-#### Health Check
+#### Health Checks
 
-```console
+**Service Information**:
+
+```shell
 GET /
 ```
 
-Returns a simple health check response.
+Returns service metadata including version and status.
+
+**Liveness Probe**:
+
+```shell
+GET /livez
+```
+
+Kubernetes liveness probe. Returns `200` if the service process is alive.
+
+**Readiness Probe**:
+
+```shell
+GET /readyz
+```
+
+Kubernetes readiness probe. Returns `200` when service is ready to handle requests.
+Returns `503` during initialization, shutdown, or when dependencies are unavailable.
 
 #### Person Detection
 
-```console
+**Detect Person in Image**:
+
+```shell
 POST /detect
 ```
 
-Submit an image file to check if a person is present.
+**Parameters**:
 
-Example with curl:
+- `file`: Image file (multipart/form-data)
+- Supported formats: JPG, JPEG, PNG, BMP, TIFF
+
+**Example with curl**:
 
 ```shell
 curl -X POST http://localhost:8000/detect \
-  -F "file=@image.jpg"
+  -F "file=@/path/to/image.jpg"
 ```
 
 ### Response Format
+
+**Successful Detection**:
 
 ```json
 {
   "filename": "image.jpg",
   "person_detected": true,
-  "confidence": 0.92,
-  "num_persons": 1,
+  "confidence": 0.89,
+  "num_persons": 2,
   "person_boxes": [
     {
-      "confidence": 0.92,
+      "confidence": 0.89,
       "bbox": [120.5, 250.8, 380.2, 520.6]
+    },
+    {
+      "confidence": 0.76,
+      "bbox": [450.1, 180.3, 600.7, 480.9]
     }
   ]
 }
+```
+
+**No Person Detected**:
+
+```json
+{
+  "filename": "image.jpg",
+  "person_detected": false,
+  "confidence": 0.0,
+  "num_persons": 0,
+  "person_boxes": []
+}
+```
+
+**Response Fields**:
+
+- `filename`: Original filename or "uploaded_image"
+- `person_detected`: Boolean indicating if any person was found
+- `confidence`: Highest confidence score among detected persons
+- `num_persons`: Total number of persons detected
+- `person_boxes`: Array of detection results with confidence and bounding box coordinates
+
+**Bounding Box Format**: `[x1, y1, x2, y2]` where:
+
+- `x1, y1`: Top-left corner coordinates
+- `x2, y2`: Bottom-right corner coordinates
+
+### Testing the API
+
+**Basic health check**:
+
+```shell
+curl http://localhost:8000/
+```
+
+**Liveness probe**:
+
+```shell
+curl http://localhost:8000/livez
+```
+
+**Readiness probe**:
+
+```shell
+curl http://localhost:8000/readyz
 ```
 
 ## Known Issues
