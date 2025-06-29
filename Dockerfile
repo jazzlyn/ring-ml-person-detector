@@ -12,7 +12,7 @@ WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
 
-RUN uv sync --frozen
+RUN uv sync --no-dev --frozen --extra cpu
 
 ENV PATH="/app/.venv/bin:$PATH"
 
@@ -34,12 +34,12 @@ RUN uv run pylint src/
 FROM python:3.12-slim@sha256:e55523f127124e5edc03ba201e3dbbc85172a2ec40d8651ac752364b23dfd733 AS production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-        libgl1-mesa-glx \
-        libglib2.0-0 \
-        libsm6 \
-        libxext6 \
-        libxrender-dev \
-        libgomp1 && \
+      libgl1-mesa-glx \
+      libglib2.0-0 \
+      libsm6 \
+      libxext6 \
+      libxrender-dev \
+      libgomp1 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -51,9 +51,7 @@ USER user
 
 COPY --from=base /app ./
 COPY src/ ./src/
-COPY config/ ./config/
 
-ENV YOLO_CONFIG_DIR="/app/yolo"
 ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000

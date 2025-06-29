@@ -7,10 +7,45 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
   "fastapi==0.115.14",
   "python-multipart==0.0.20",
-  "torch==2.7.1",
   "ultralytics==8.3.160",
   "uvicorn==0.35.0",
 ]
+
+[project.optional-dependencies]
+cpu = [
+  "torch==2.7.1",
+]
+xpu = [
+  "torch==2.7.1",
+  "pytorch-triton-xpu==3.3.1",
+]
+
+[tool.uv]
+conflicts = [
+  [
+    { extra = "cpu" },
+    { extra = "xpu" },
+  ],
+]
+
+[tool.uv.sources]
+torch = [
+  { index = "torch-cpu", extra = "cpu" },
+  { index = "torch-xpu", extra = "xpu" },
+]
+pytorch-triton-xpu = [
+  { index = "torch-xpu", extra = "xpu" },
+]
+
+[[tool.uv.index]]
+name = "torch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "torch-xpu"
+url = "https://download.pytorch.org/whl/xpu"
+explicit = true
 
 [dependency-groups]
 dev = [
@@ -33,6 +68,7 @@ line-length = 120
 
 [tool.ruff.lint]
 extend-select = ["ALL"]
+fixable = ["ALL"]
 ignore = [
   "FIX",  # flake8-fixme
   "TD",   # flake8-todo
