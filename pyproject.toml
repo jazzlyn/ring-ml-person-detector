@@ -14,9 +14,11 @@ dependencies = [
 [project.optional-dependencies]
 cpu = [
   "torch==2.7.1",
+  "torchvision==0.22.1",
 ]
 xpu = [
   "torch==2.7.1",
+  "torchvision==0.22.1",
   "pytorch-triton-xpu==3.3.1",
 ]
 
@@ -30,6 +32,10 @@ conflicts = [
 
 [tool.uv.sources]
 torch = [
+  { index = "torch-cpu", extra = "cpu" },
+  { index = "torch-xpu", extra = "xpu" },
+]
+torchvision = [
   { index = "torch-cpu", extra = "cpu" },
   { index = "torch-xpu", extra = "xpu" },
 ]
