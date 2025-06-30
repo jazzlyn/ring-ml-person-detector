@@ -14,7 +14,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-  "basedpyright==1.29.4",
+  "basedpyright==1.29.5",
   "pylint==3.3.7",
   "ruff==0.12.1",
 ]
