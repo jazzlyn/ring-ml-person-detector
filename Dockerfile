@@ -1,4 +1,4 @@
-FROM python:3.12@sha256:47d28e7d429679c31c3ea60e90857c54c7967084685e2ee287935116e5a79b92 AS base
+FROM python:3.13@sha256:5f69d22a88dd4cc4ee1576def19aef48c8faa1b566054c44291183831cbad13b AS base
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         build-essential && \
@@ -31,7 +31,7 @@ RUN uv run pylint src/
 
 # run tests (when available)
 
-FROM python:3.12-slim@sha256:e55523f127124e5edc03ba201e3dbbc85172a2ec40d8651ac752364b23dfd733 AS production
+FROM python:3.13-slim@sha256:f2fdaec50160418e0c2867ba3e254755edd067171725886d5d303fd7057bbf81 AS production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         libgl1-mesa-glx \
