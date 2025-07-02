@@ -1,18 +1,18 @@
 FROM python:3.12@sha256:47d28e7d429679c31c3ea60e90857c54c7967084685e2ee287935116e5a79b92 AS base
+COPY --from=ghcr.io/astral-sh/uv:0.7.17 /uv /uvx /bin/
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         build-essential && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ADD https://astral.sh/uv/install.sh /install.sh
-RUN chmod -R 655 /install.sh && /install.sh && rm /install.sh
-ENV PATH="/root/.local/bin:${PATH}"
-
 WORKDIR /app
 
 COPY pyproject.toml uv.lock ./
 
-RUN uv sync --frozen
+ENV UV_COMPILE_BYTECODE=1
+ENV UV_NO_CACHE=1
+
+RUN uv sync --no-dev --frozen --extra cpu
 
 ENV PATH="/app/.venv/bin:$PATH"
 
@@ -34,12 +34,8 @@ RUN uv run pylint src/
 FROM python:3.12-slim@sha256:4600f71648e110b005bf7bca92dbb335e549e6b27f2e83fceee5e11b3e1a4d01 AS production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
-        libgl1-mesa-glx \
-        libglib2.0-0 \
-        libsm6 \
-        libxext6 \
-        libxrender-dev \
-        libgomp1 && \
+      libgl1-mesa-glx \
+      libglib2.0-0 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -51,9 +47,7 @@ USER user
 
 COPY --from=base /app ./
 COPY src/ ./src/
-COPY config/ ./config/
 
-ENV YOLO_CONFIG_DIR="/app/yolo"
 ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
