@@ -1,4 +1,4 @@
-FROM python:3.12@sha256:47d28e7d429679c31c3ea60e90857c54c7967084685e2ee287935116e5a79b92 AS base
+FROM python:3.12@sha256:77a36ff63e657d8ec7cd4e86e452f4cd23b6c92811696b0735226fbc0660a5b8 AS base
 COPY --from=ghcr.io/astral-sh/uv:0.7.17 /uv /uvx /bin/
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
