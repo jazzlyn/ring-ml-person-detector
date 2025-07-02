@@ -118,14 +118,12 @@ repos:
         entry: basedpyright
         language: system
         types: [python]
-        exclude: ^src/(model)\.py$
 
       - id: pylint
         name: pylint
         entry: pylint
         language: system
         types: [python]
-        exclude: ^src/(model)\.py$
 
       - id: ruff-check
         name: ruff-check
@@ -133,10 +131,8 @@ repos:
         language: system
         types: [python]
         args: [--fix]
-        exclude: ^src/(model)\.py$
       - id: ruff-format
         name: ruff-format
         entry: ruff format
         language: system
         types: [python]
-        exclude: ^src/(model)\.py$

@@ -1,208 +1,245 @@
 """
-Model definition and loading for Ring Camera Person Detection.
-This module handles the loading and configuration of the YOLOv8 model.
+Model definition and loading for Detection.
+
+This module handles the loading and configuration of the YOLO model.
 """
 
 import logging
-import os
-from typing import Any, Dict, Union
+from enum import Enum
+from pathlib import Path
+from typing import Any, ClassVar
 
-import cv2
+import cv2  # pylint: disable=import-error
 import numpy as np
 import torch
 from PIL import Image
-from ultralytics import YOLO
+from ultralytics import YOLO  # type: ignore[import-untyped]
 
 from config import InferenceConfig, ModelConfig
 
 # Configure logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
 
-class PersonDetector:
-    """YOLOv8 model for person detection in Ring camera images."""
+class ModelSize(Enum):
+    """Enum for YOLO model sizes."""
 
-    MODELS = {
-        "nano": "yolov8n.pt",
-        "small": "yolov8s.pt",
-        "medium": "yolov8m.pt",
-        "large": "yolov8l.pt",
-        "xlarge": "yolov8x.pt",
+    NANO = "nano"
+    SMALL = "small"
+    MEDIUM = "medium"
+    LARGE = "large"
+    XLARGE = "xlarge"
+
+
+class DeviceType(Enum):
+    """Enum for supported device types."""
+
+    CPU = "cpu"
+    CUDA = "cuda"
+    MPS = "mps"
+    XPU = "xpu"
+
+
+class PersonDetector:
+    """YOLO model for detection in images."""
+
+    MODEL_FILES: ClassVar[dict[ModelSize, str]] = {
+        ModelSize.NANO: "yolo11n.pt",
+        ModelSize.SMALL: "yolo11s.pt",
+        ModelSize.MEDIUM: "yolo11m.pt",
+        ModelSize.LARGE: "yolo11l.pt",
+        ModelSize.XLARGE: "yolo11x.pt",
     }
 
     def __init__(
         self,
         model_config: ModelConfig,
         inference_config: InferenceConfig,
-        classes_to_detect: list[int] | None = None,
+        classes_to_detect: list[int],
     ) -> None:
         """
-        Initialize the person detector with the specified YOLOv8 model.
+        Initialize the person detector with the specified YOLO model.
 
         Args:
-            model_config: Model configuration dataclass.
-            inference_config: Inference configuration dataclass.
-            classes_to_detect: List of class IDs to detect. Default is [0] (person).
+            model_config: Model configuration dataclass
+            inference_config: Inference configuration dataclass
+            classes_to_detect: List of class IDs to detect
+
         """
-        # Model configuration
-        model_size = model_config.size
-        device = model_config.device
-        custom_model_path = model_config.custom_model_path
-        models_dir = model_config.models_dir
+        # store configuration
+        self.model_config = model_config
+        self.inference_config = inference_config
+        self.classes_to_detect = classes_to_detect
 
-        # Inference configuration
-        self.confidence_threshold = inference_config.conf_threshold
-        self.iou_threshold = inference_config.iou_threshold
-        self.max_detections = inference_config.max_detections
-        self.img_size = inference_config.img_size
-        self.half_precision = inference_config.half_precision
+        # initialize device
+        self.device = model_config.device
+        logger.info("Selected device: %s", self.device)
 
-        # Classes to detect (default to person only)
-        self.classes_to_detect = classes_to_detect if classes_to_detect else [0]
+        # prepare model directory
+        self.models_dir = Path(model_config.models_dir)
+        self.models_dir.mkdir(parents=True, exist_ok=True)
 
-        # Handle 'auto' device selection
-        if device == "auto":
-            device = None
+        # model will be loaded lazily
+        self._model: YOLO | None = None
+        self._model_params: dict[str, Any] | None = None
 
-        # Auto-select device if not specified
-        if device is None:
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
-            if (
-                self.device == "cpu"
-                and hasattr(torch.backends, "mps")
-                and torch.backends.mps.is_available()
-            ):
-                self.device = "mps"  # Use Apple Silicon GPU if available
-        else:
-            self.device = device
+    def _get_model_path(self) -> Path:
+        """Get the path to the model file."""
+        if self.model_config.custom_model_path:
+            return Path(self.model_config.custom_model_path)
 
-        logger.info(f"Using device: {self.device}")
+        model_size = ModelSize(self.model_config.size)
+        model_filename = self.MODEL_FILES[model_size]
+        return self.models_dir / model_filename
 
-        os.makedirs(models_dir, exist_ok=True)
+    def _load_model(self) -> None:
+        """Load the YOLO model if not already loaded."""
+        if self._model is not None:
+            return
 
-        # Load model
-        if custom_model_path:
-            model_path = custom_model_path
-            logger.info(f"Loading custom model from {model_path}")
-        else:
-            if model_size not in self.MODELS:
-                logger.warning(
-                    f"Unknown model size: {model_size}, using 'small' instead"
-                )
-                model_size = "small"
+        model_path = self._get_model_path()
 
-            model_name = self.MODELS[model_size]
-            model_path = os.path.join(models_dir, model_name)
-
-            # Check if model exists in the specified directory
-            if not os.path.exists(model_path):
-                logger.info(
-                    f"Pre-trained model not found at {model_path}, will download and save there"
-                )
-            else:
-                logger.info(f"Using pre-trained model from {model_path}")
-
-            logger.info(f"Loading pretrained YOLOv8 {model_size} model")
+        logger.info("Loading model from: %s", model_path)
 
         try:
-            # Set environment variable for cache directory before importing YOLO
-            os.environ["YOLO_CACHE_DIR"] = os.path.abspath(models_dir)
-            self.model = YOLO(model_path)
+            self._model = YOLO(str(model_path))
 
-            # Configure model parameters
-            self.model_params = {
-                "conf": self.confidence_threshold,
-                "iou": self.iou_threshold,
-                "max_det": self.max_detections,
+            # configure model parameters
+            self._model_params = {
+                "conf": self.inference_config.conf_threshold,
+                "iou": self.inference_config.iou_threshold,
+                "imgsz": self.inference_config.img_size,
+                "half": self.inference_config.half_precision,
                 "device": self.device,
+                "max_det": self.inference_config.max_detections,
                 "classes": self.classes_to_detect,
-                "half": self.half_precision,
-                "imgsz": self.img_size,
+                "retina_masks": True,
+                "verbose": False,
             }
 
-            # Warmup the model
-            logger.info("Warming up model with a test inference...")
-            self.model.predict(
-                torch.zeros(1, 3, 640, 640).to(self.device), **self.model_params
-            )
+            logger.info("Model loaded successfully")
+
         except Exception as e:
-            logger.error(f"Failed to load model: {e}")
-            raise
+            logger.exception("failed to load model from %s", model_path)
+            msg = f"Failed to load model from {model_path}"
+            raise RuntimeError(msg) from e
+
+    @property
+    def model(self) -> YOLO:
+        """Get the loaded model, loading it if necessary."""
+        if self._model is None:
+            self._load_model()
+        if self._model is None:
+            msg = "Model should be loaded"
+            raise RuntimeError(msg)
+        return self._model
+
+    @property
+    def model_params(self) -> dict[str, Any]:
+        """Get model parameters, ensuring model is loaded."""
+        if self._model_params is None:
+            self._load_model()
+        if self._model_params is None:
+            msg = "Model parameters should be set"
+            raise RuntimeError(msg)
+        return self._model_params
+
+    def _decode_image_bytes(self, image_bytes: bytes) -> np.ndarray:
+        """Efficiently decode image bytes to numpy array."""
+        try:
+            # use numpy frombuffer for efficiency
+            nparr = np.frombuffer(image_bytes, np.uint8)
+            image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)  # pylint: disable=no-member
+
+            # convert BGR to RGB
+            return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # pylint: disable=no-member
+
+        except Exception as e:
+            logger.exception("error decoding image bytes")
+            msg = "Failed to decode image data"
+            raise ValueError(msg) from e
+
+    def _process_results(
+        self,
+        results: list[Any],
+        filename: str,
+    ) -> dict[str, Any]:
+        """Process YOLO results and extract configured class detections."""
+        detection_boxes: list[dict[str, Any]] = []
+        max_confidence = 0.0
+
+        for result in results:
+            if result.boxes is None or len(result.boxes) == 0:
+                continue
+
+            # filter for configured classes only
+            class_mask = torch.isin(result.boxes.cls, torch.tensor(self.classes_to_detect))
+            if not class_mask.any():
+                continue
+
+            # get detections for configured classes
+            class_confidences = result.boxes.conf[class_mask]
+            class_bboxes = result.boxes.xyxy[class_mask]
+
+            for conf, bbox in zip(class_confidences, class_bboxes, strict=True):
+                confidence = float(conf.item())
+                max_confidence = max(max_confidence, confidence)
+
+                detection_boxes.append(
+                    {
+                        "confidence": confidence,
+                        "bbox": bbox.tolist(),  # [x1, y1, x2, y2]
+                    },
+                )
+
+        return {
+            "filename": filename,
+            "person_detected": len(detection_boxes) > 0,
+            "confidence": max_confidence,
+            "num_persons": len(detection_boxes),
+            "person_boxes": detection_boxes,
+        }
 
     def detect_persons(
         self,
-        image_data: Union[str, bytes, np.ndarray, Image.Image],
+        image_data: str | bytes | np.ndarray | Image.Image,
         filename: str = "unknown.jpg",
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """
         Detect persons in an image.
 
         Args:
-            image_data: Image data as file path, bytes, numpy array, or PIL Image.
-            filename: Optional filename for the image being processed.
+            image_data: Image data as file path, bytes, numpy array, or PIL Image
+            filename: Optional filename for the image being processed
 
         Returns:
-            Dictionary with detection results specifically for persons.
+            Dictionary with detection results specifically for persons
+
+        Raises:
+            ValueError: If inference fails
+
         """
         try:
-            # Convert bytes to numpy array if needed
-            if isinstance(image_data, bytes):
-                try:
-                    # Convert bytes to numpy array using OpenCV
-                    nparr = np.frombuffer(image_data, np.uint8)
-                    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-                    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert to RGB
-                except Exception as e:
-                    logger.error(f"Error converting image bytes: {e}")
-                    return {
-                        "filename": filename,
-                        "person_detected": False,
-                        "confidence": 0.0,
-                        "num_persons": 0,
-                        "person_boxes": [],
-                    }
-            else:
-                image = image_data
+            # preprocess image data
+            image = self._decode_image_bytes(image_data) if isinstance(image_data, bytes) else image_data
 
-            # Run inference with configured parameters
-            results = self.model.predict(
-                source=image, verbose=False, **self.model_params
-            )
+            # run inference
+            results = self.model.predict(source=image, **self.model_params)  # type: ignore[misc]
 
-            # Focus only on person class (class 0 in COCO dataset)
-            person_boxes = []
-            max_confidence = 0.0
+            # process and return results
+            return self._process_results(results, filename)
 
-            for result in results:
-                for i, cls in enumerate(result.boxes.cls):
-                    cls_id = int(cls)
-                    if cls_id == 0:  # Only person class
-                        confidence = float(result.boxes.conf[i].item())
-                        if confidence > max_confidence:
-                            max_confidence = confidence
-
-                        # Get bounding box coordinates
-                        box = result.boxes.xyxy[i].tolist()
-                        person_boxes.append(
-                            {"confidence": confidence, "bbox": box}  # [x1, y1, x2, y2]
-                        )
-
-            # Create response in the desired format
-            response = {
-                "filename": filename,
-                "person_detected": len(person_boxes) > 0,
-                "confidence": max_confidence,
-                "num_persons": len(person_boxes),
-                "person_boxes": person_boxes,
-            }
-
-            return response
-
-        except Exception as e:
-            logger.error(f"Error during inference: {e}")
+        except ValueError:
+            # re-raise validation errors with more context
+            logger.exception("validation error during inference for %s", filename)
+            raise
+        except (RuntimeError, OSError):
+            logger.exception("unexpected error during inference for %s", filename)
+            # return safe fallback response
             return {
                 "filename": filename,
                 "person_detected": False,

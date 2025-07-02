@@ -10,7 +10,7 @@ server:
 # Model Configuration
 model:
   size: small # Options: nano, small, medium, large, xlarge
-  device: cpu # Options: cpu, cuda, mps
+  device: cpu # Options: cpu, cuda, mps, xpu
   custom_model_path: null # Set to path if using custom model
   models_dir: ./models # Directory for storing models
 
