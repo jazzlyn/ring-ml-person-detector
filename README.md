@@ -171,7 +171,7 @@ The API server will start at `http://localhost:8000`.
 Build the Docker image:
 
 ```shell
-docker buildx build --progress=plain -t ring-person-detector .
+docker buildx build --progress=plain -t ml-detector .
 ```
 
 Run the Docker container:
@@ -181,7 +181,7 @@ docker run --rm -it \
   -p 8000:8000 \
   -v $(pwd)/config:/app/config \
   -v $(pwd)/models:/app/models \
-  ring-person-detector
+  ml-detector
 ```
 
 ### API Endpoints
