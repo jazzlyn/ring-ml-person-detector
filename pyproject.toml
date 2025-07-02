@@ -7,7 +7,7 @@ requires-python = "==3.12.*"
 dependencies = [
   "fastapi==0.115.14",
   "python-multipart==0.0.20",
-  "ultralytics==8.3.160",
+  "ultralytics==8.3.161",
   "uvicorn==0.35.0",
 ]
 
@@ -55,7 +55,7 @@ explicit = true
 
 [dependency-groups]
 dev = [
-  "basedpyright==1.29.4",
+  "basedpyright==1.29.5",
   "pylint==3.3.7",
   "ruff==0.12.1",
 ]

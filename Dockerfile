@@ -31,7 +31,7 @@ RUN uv run pylint src/
 
 # run tests (when available)
 
-FROM python:3.12-slim@sha256:e55523f127124e5edc03ba201e3dbbc85172a2ec40d8651ac752364b23dfd733 AS production
+FROM python:3.12-slim@sha256:4600f71648e110b005bf7bca92dbb335e549e6b27f2e83fceee5e11b3e1a4d01 AS production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
       libgl1-mesa-glx \
