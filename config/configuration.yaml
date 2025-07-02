@@ -20,6 +20,8 @@ inference:
   max_detections: 300 # Max detections per image
   img_size: 640 # Input image size (multiple of 32)
   half_precision: false # Use FP16 for faster inference on supported GPUs
+  retina_masks: true # Use retina masks for higher quality segmentation
+  verbose: false # Enable verbose logging during inference
 
 # Classes of interest (COCO dataset class indices)
 # 0: person - leave as is if you only want to detect people
