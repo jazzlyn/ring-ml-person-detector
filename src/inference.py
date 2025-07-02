@@ -47,7 +47,15 @@ async def load_model(app_config: AppConfig) -> PersonDetector:
         inference_config=app_config.inference,
         classes_to_detect=app_config.classes_to_detect,
     )
-    logger.info("Model loaded successfully")
+
+    # perform model download if configured
+    if app_config.model.download_on_startup:
+        logger.info("Model download enabled, starting download process...")
+        model.download()
+    else:
+        logger.info("Model download disabled, model will be loaded on first inference")
+
+    logger.info("Model initialization completed successfully")
     return model
 
 
