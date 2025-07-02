@@ -13,6 +13,7 @@ model:
   device: cpu # Options: cpu, cuda, mps, xpu
   custom_model_path: null # Set to path if using custom model
   models_dir: ./models # Directory for storing models
+  download_on_startup: true # Download model file during startup
 
 inference:
   conf_threshold: 0.25 # Confidence threshold for detections (0.0 to 1.0)

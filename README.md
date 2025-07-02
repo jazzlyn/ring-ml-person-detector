@@ -14,9 +14,9 @@
 [![pre-commit][pre-commit-shield]][pre-commit-url]
 [![taskfile][taskfile-shield]][taskfile-url]
 
-# ML Person Detector
+# ML Detector
 
-A Python application that filters images to keep only those containing people using YOLO object detection.
+A Python application that filters images to keep only those containing the objects specified using YOLO object detection.
 
 <details>
   <summary style="font-size:1.2em;">Table of Contents</summary>
@@ -98,33 +98,7 @@ A Python application that filters images to keep only those containing people us
 
 ### Configuration File
 
-The application uses `config/configuration.yaml` for all settings:
-
-```yaml
-# Server Settings
-server:
-  host: "0.0.0.0" # Bind address
-  port: 8000 # Server port
-  reload: true # Auto-reload on changes (dev only)
-
-# Model Configuration
-model:
-  size: small # Options: nano, small, medium, large, xlarge
-  device: cpu # Options: cpu, cuda, mps
-  custom_model_path: null # Path to custom model (optional)
-  models_dir: ./models # Model storage directory
-
-# Inference Settings
-inference:
-  conf_threshold: 0.25 # Detection confidence threshold (0.0-1.0)
-  iou_threshold: 0.45 # Non-maximum suppression threshold
-  max_detections: 300 # Maximum detections per image
-  img_size: 640 # Input image size (multiple of 32)
-  half_precision: false # Use FP16 for GPU acceleration
-
-# Detection Classes
-classes_to_detect: [0] # COCO class indices (0 = person)
-```
+The application uses `config/configuration.yaml` for all settings, see for example configuration.
 
 ### Environment Variables
 

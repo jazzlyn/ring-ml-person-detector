@@ -247,3 +247,31 @@ class PersonDetector:
                 "num_persons": 0,
                 "person_boxes": [],
             }
+
+    def download(self) -> None:
+        """
+        Ensure the model file is downloaded and available.
+
+        This should be called during application startup to ensure the model
+        file is present in the shared volume and avoid download delays on first request.
+        """
+        logger.info("Starting model download...")
+
+        model_path = self._get_model_path()
+
+        # check if model file already exists
+        if model_path.exists():
+            logger.info("Model file already exists at: %s", model_path)
+            return
+
+        logger.info("Model file not found, triggering download...")
+
+        try:
+            # instantiate YOLO model which will trigger download if needed
+            _ = YOLO(str(model_path))
+            logger.info("Model file downloaded successfully to: %s", model_path)
+
+        except Exception as e:
+            logger.exception("Model download failed")
+            msg = "Model download failed"
+            raise RuntimeError(msg) from e
