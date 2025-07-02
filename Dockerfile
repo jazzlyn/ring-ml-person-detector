@@ -1,5 +1,5 @@
 FROM python:3.12@sha256:77a36ff63e657d8ec7cd4e86e452f4cd23b6c92811696b0735226fbc0660a5b8 AS base
-COPY --from=ghcr.io/astral-sh/uv:0.7.17 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.7.17@sha256:68a26194ea8da0dbb014e8ae1d8ab08a469ee3ba0f4e2ac07b8bb66c0f8185c1 /uv /uvx /bin/
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
         build-essential && \
