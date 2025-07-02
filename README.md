@@ -14,9 +14,9 @@
 [![pre-commit][pre-commit-shield]][pre-commit-url]
 [![taskfile][taskfile-shield]][taskfile-url]
 
-# Ring ML Person Detector
+# ML Person Detector
 
-A Python application that filters Ring camera images to keep only those containing people using YOLOv8 object detection.
+A Python application that filters images to keep only those containing people using YOLO object detection.
 
 <details>
   <summary style="font-size:1.2em;">Table of Contents</summary>
