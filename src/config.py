@@ -36,21 +36,21 @@ class ServerConfig:
 class ModelConfig:
     """Configuration for the ML model."""
 
-    size: str = "small"  # Options: nano, small, medium, large, xlarge
-    device: str = "cpu"  # Options: cpu, cuda, mps
-    custom_model_path: str | None = None  # Set to path if using custom model
-    models_dir: str = "./models"  # Directory for storing models
+    size: str = "small"
+    device: str = "cpu"
+    custom_model_path: str | None = None
+    models_dir: str = "./models"
 
 
 @dataclass
 class InferenceConfig:
     """Configuration for inference settings."""
 
-    conf_threshold: float = 0.25  # Confidence threshold for detections (0.0 to 1.0)
-    iou_threshold: float = 0.45  # IoU threshold for NMS (0.0 to 1.0)
-    max_detections: int = 300  # Max detections per image
-    img_size: int = 640  # Input image size (multiple of 32)
-    half_precision: bool = False  # Use FP16 for faster inference on supported GPUs
+    conf_threshold: float = 0.25
+    iou_threshold: float = 0.45
+    max_detections: int = 300
+    img_size: int = 640
+    half_precision: bool = False
 
 
 @dataclass
