@@ -20,7 +20,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG_PATH = Path("config") / "configuration.yaml"
-CONFIG_ENV_VAR = "RING_DETECTOR_CONFIG"
+CONFIG_ENV_VAR = "CONFIG_PATH"
 
 
 @dataclass

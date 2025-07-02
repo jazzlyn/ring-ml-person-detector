@@ -128,12 +128,12 @@ classes_to_detect: [0] # COCO class indices (0 = person)
 
 ### Environment Variables
 
-- **`RING_DETECTOR_CONFIG`**: Path to configuration file (default: `config/configuration.yaml`)
+- **`CONFIG_PATH`**: Path to configuration file (default: `config/configuration.yaml`)
 
 Example:
 
 ```shell
-export RING_DETECTOR_CONFIG="/path/to/custom/config.yaml"
+export CONFIG_PATH="/path/to/custom/config.yaml"
 ```
 
 ### Model Configuration
@@ -159,7 +159,7 @@ export RING_DETECTOR_CONFIG="/path/to/custom/config.yaml"
 Run the API server:
 
 ```shell
-export RING_DETECTOR_CONFIG="config/configuration.yaml"
+export CONFIG_PATH="config/configuration.yaml"
 export YOLO_CONFIG_DIR="/app/yolo" # writeable
 uv run src/inference.py
 ```
