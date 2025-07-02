@@ -117,8 +117,8 @@ class PersonDetector:
                 "device": self.device,
                 "max_det": self.inference_config.max_detections,
                 "classes": self.classes_to_detect,
-                "retina_masks": True,
-                "verbose": False,
+                "retina_masks": self.inference_config.retina_masks,
+                "verbose": self.inference_config.verbose,
             }
 
             logger.info("Model loaded successfully")

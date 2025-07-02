@@ -102,12 +102,12 @@ The application uses `config/configuration.yaml` for all settings, see for examp
 
 ### Environment Variables
 
-- **`RING_DETECTOR_CONFIG`**: Path to configuration file (default: `config/configuration.yaml`)
+- **`CONFIG_PATH`**: Path to configuration file (default: `config/configuration.yaml`)
 
 Example:
 
 ```shell
-export RING_DETECTOR_CONFIG="/path/to/custom/config.yaml"
+export CONFIG_PATH="/path/to/custom/config.yaml"
 ```
 
 ### Model Configuration
@@ -133,7 +133,7 @@ export RING_DETECTOR_CONFIG="/path/to/custom/config.yaml"
 Run the API server:
 
 ```shell
-export RING_DETECTOR_CONFIG="config/configuration.yaml"
+export CONFIG_PATH="config/configuration.yaml"
 export YOLO_CONFIG_DIR="/app/yolo" # writeable
 uv run src/inference.py
 ```
@@ -145,7 +145,7 @@ The API server will start at `http://localhost:8000`.
 Build the Docker image:
 
 ```shell
-docker buildx build --progress=plain -t ring-person-detector .
+docker buildx build --progress=plain -t ml-detector .
 ```
 
 Run the Docker container:
@@ -155,7 +155,7 @@ docker run --rm -it \
   -p 8000:8000 \
   -v $(pwd)/config:/app/config \
   -v $(pwd)/models:/app/models \
-  ring-person-detector
+  ml-detector
 ```
 
 ### API Endpoints

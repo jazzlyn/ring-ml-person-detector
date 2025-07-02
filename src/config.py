@@ -20,7 +20,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG_PATH = Path("config") / "configuration.yaml"
-CONFIG_ENV_VAR = "RING_DETECTOR_CONFIG"
+CONFIG_ENV_VAR = "CONFIG_PATH"
 
 
 @dataclass
@@ -52,6 +52,8 @@ class InferenceConfig:
     max_detections: int = 300
     img_size: int = 640
     half_precision: bool = False
+    retina_masks: bool = True
+    verbose: bool = False
 
 
 @dataclass
@@ -156,6 +158,8 @@ class ConfigurationManager:
             max_detections=inference_data.get("max_detections", 300),
             img_size=inference_data.get("img_size", 640),
             half_precision=inference_data.get("half_precision", False),
+            retina_masks=inference_data.get("retina_masks", True),
+            verbose=inference_data.get("verbose", False),
         )
 
     def get_classes_to_detect(self) -> list[int]:
