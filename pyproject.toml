@@ -57,7 +57,7 @@ explicit = true
 dev = [
   "basedpyright==1.29.5",
   "pylint==3.3.7",
-  "ruff==0.12.1",
+  "ruff==0.12.2",
 ]
 
 [tool.basedpyright]
