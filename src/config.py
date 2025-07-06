@@ -40,6 +40,7 @@ class ModelConfig:
     device: str = "cpu"
     custom_model_path: str | None = None
     models_dir: str = "./models"
+    download_on_startup: bool = True
 
 
 @dataclass
@@ -145,6 +146,7 @@ class ConfigurationManager:
             device=model_data.get("device", "cpu"),
             custom_model_path=model_data.get("custom_model_path"),
             models_dir=model_data.get("models_dir", "./models"),
+            download_on_startup=model_data.get("download_on_startup", True),
         )
 
     def get_inference_config(self) -> InferenceConfig:
