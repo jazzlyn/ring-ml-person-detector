@@ -50,49 +50,49 @@ A Python application that filters images to keep only those containing the objec
 
 ### Prerequisites
 
-- **[uv][uv-url]**: Fast Python package manager
-- **[pre-commit][pre-commit-url]**: Git hooks framework
-- **[Task][taskfile-url]**: Task runner (optional)
+- [uv][uv-url]: Fast Python package manager
+- [pre-commit][pre-commit-url]: Git hooks framework
+- [Task][taskfile-url]: Task runner (optional)
+
+#### For XPU support (arch)
+
+- intel-compute-runtime (aur/legacy or extra for latest)
+- level-zero-headers
+- level-zero-loader
 
 ### Initialization
 
-1. **Initialize pre-commit hooks**:
+#### Initialize pre-commit hooks
 
-   ```shell
-   task pre-commit:init
-   ```
+```shell
+task pre-commit:init
+```
 
-2. **Install dependencies**:
+#### Install dependencies
 
-   Production dependencies:
+**Development Dependencies**:
 
-   ```shell
-   uv sync
-   ```
+```shell
+uv sync --dev
+```
 
-   Include development dependencies:
+**For CPU inference**:
 
-   ```shell
-   uv sync --dev
-   ```
+```shell
+uv sync --extra cpu
+```
 
-   For CPU inference:
+**For Intel XPU inference**:
 
-   ```shell
-   uv sync --extra cpu
-   ```
+```shell
+uv sync --extra xpu
+```
 
-   For Intel XPU inference:
+#### Activate virtual environment
 
-   ```shell
-   uv sync --extra xpu
-   ```
-
-3. **Activate virtual environment**:
-
-   ```shell
-   source .venv/bin/activate
-   ```
+```shell
+source .venv/bin/activate
+```
 
 ## Configuration
 
