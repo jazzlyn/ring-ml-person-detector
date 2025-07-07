@@ -16,6 +16,10 @@ cpu = [
   "torch==2.7.1",
   "torchvision==0.22.1",
 ]
+cuda = [
+  "torch==2.7.1",
+  "torchvision==0.22.1",
+]
 xpu = [
   "torch==2.7.1",
   "torchvision==0.22.1",
@@ -26,6 +30,7 @@ xpu = [
 conflicts = [
   [
     { extra = "cpu" },
+    { extra = "cuda" },
     { extra = "xpu" },
   ],
 ]
@@ -33,10 +38,12 @@ conflicts = [
 [tool.uv.sources]
 torch = [
   { index = "torch-cpu", extra = "cpu" },
+  { index = "torch-cuda", extra = "cuda" },
   { index = "torch-xpu", extra = "xpu" },
 ]
 torchvision = [
   { index = "torch-cpu", extra = "cpu" },
+  { index = "torch-cuda", extra = "cuda" },
   { index = "torch-xpu", extra = "xpu" },
 ]
 pytorch-triton-xpu = [
@@ -46,6 +53,11 @@ pytorch-triton-xpu = [
 [[tool.uv.index]]
 name = "torch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[[tool.uv.index]]
+name = "torch-cuda"
+url = "https://download.pytorch.org/whl/cu128"
 explicit = true
 
 [[tool.uv.index]]
