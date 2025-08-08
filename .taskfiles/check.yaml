@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  devices:
+    desc: check which devices are available for torch
+    silent: true
+    cmds:
+      - python -c "import torch; print('CUDA available:', torch.cuda.is_available()); print('CUDA device count:', torch.cuda.device_count()) if torch.cuda.is_available() else None"

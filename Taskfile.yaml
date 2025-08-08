@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://json.schemastore.org/taskfile.json
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
 vars:
@@ -8,4 +8,13 @@ vars:
   DEVENV_DIR: "{{.PROJECT_DIR}}/devenv"
 
 includes:
-  pre-commit: .taskfiles/pre-commit/Taskfile.yaml
+  check: .taskfiles/check.yaml
+  pre-commit: .taskfiles/pre-commit.yaml
+
+tasks:
+  lint:
+    desc: lint codebase
+    dir: "{{.PROJECT_DIR}}"
+    cmds:
+      - task: pre-commit:init
+      - task: pre-commit:run
