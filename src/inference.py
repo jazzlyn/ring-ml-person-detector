@@ -62,7 +62,7 @@ async def load_model(app_config: AppConfig) -> PersonDetector:
 @asynccontextmanager
 async def lifespan(
     app: FastAPI,  # noqa: ARG001, pylint: disable=redefined-outer-name,disable=unused-argument
-) -> AsyncGenerator[None, None]:
+) -> AsyncGenerator[None]:
     """
     Lifespan context manager for the FastAPI application.
 

@@ -73,6 +73,7 @@ dev = [
 ]
 
 [tool.basedpyright]
+# TODO: switch to "recommended"
 typeCheckingMode = "strict"
 
 [tool.pylint.FORMAT]
