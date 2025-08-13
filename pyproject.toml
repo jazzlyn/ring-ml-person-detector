@@ -7,7 +7,7 @@ requires-python = "==3.13.5"
 dependencies = [
   "fastapi==0.116.1",
   "python-multipart==0.0.20",
-  "ultralytics==8.3.177",
+  "ultralytics==8.3.178",
   "uvicorn==0.35.0",
 ]
 
