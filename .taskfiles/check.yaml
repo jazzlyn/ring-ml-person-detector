@@ -3,8 +3,14 @@
 version: "3"
 
 tasks:
-  devices:
-    desc: check which devices are available for torch
+  device:
+    desc: check if device is available for torch -- device
     silent: true
     cmds:
-      - python -c "import torch; print('CUDA available:', torch.cuda.is_available()); print('CUDA device count:', torch.cuda.device_count()) if torch.cuda.is_available() else None"
+      - |
+        python -c "
+        import torch
+        print('{{.CLI_ARGS}} available:', torch.{{.CLI_ARGS}}.is_available())
+        if torch.{{.CLI_ARGS}}.is_available():
+          print('{{.CLI_ARGS}} device count:', torch.{{.CLI_ARGS}}.device_count())
+        "
