@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  build:
+    desc: build docker image
+    cmds:
+      - docker buildx build --progress=plain -t ml-detector:latest .
+
+  inference:
+    desc: run docker inference
+    cmds:
+      - |
+        docker run --rm -it \
+          --user $(id -u):$(id -g) \
+          -p 8000:8000 \
+          -v ${PWD}/config:/app/config \
+          -v ${PWD}/models:/app/models \
+          -e YOLO_CONFIG_DIR=/tmp/yolo \
+          --gpus all \
+          ml-detector:latest
+
+  interactive:
+    desc: run docker shell
+    cmds:
+      - |
+        docker run --rm -it \
+          --user $(id -u):$(id -g) \
+          -v ${PWD}/config:/app/config \
+          -v ${PWD}/models:/app/models \
+          -e YOLO_CONFIG_DIR=/tmp/yolo \
+          --gpus all \
+          ml-detector:latest /bin/bash

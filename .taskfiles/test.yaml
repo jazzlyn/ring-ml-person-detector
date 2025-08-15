@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  detection-false:
+    desc: test no detections
+    cmds:
+      - curl -X POST http://localhost:8000/detect -F "file=@data/0/0.png"
+
+  detection-true:
+    desc: test detections
+    cmds:
+      - curl -X POST http://localhost:8000/detect -F "file=@data/1/0.png"
+
+  info:
+    desc: get app info
+    cmds:
+      - curl http://localhost:8000/
+
+  liveness:
+    desc: check if app is alive
+    cmds:
+      - curl http://localhost:8000/livez
+
+  readiness:
+    desc: check if app is ready
+    cmds:
+      - curl http://localhost:8000/readyz

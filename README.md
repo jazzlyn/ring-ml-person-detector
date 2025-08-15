@@ -33,7 +33,6 @@ A Python application that filters images to keep only those containing the objec
   - [Model Configuration](#model-configuration)
 - [Usage](#usage)
   - [Running the API](#running-the-api)
-  - [Using Docker](#using-docker)
   - [API Endpoints](#api-endpoints)
   - [Response Format](#response-format)
   - [Testing the API](#testing-the-api)
@@ -53,6 +52,11 @@ A Python application that filters images to keep only those containing the objec
 - [uv][uv-url]: Fast Python package manager
 - [pre-commit][pre-commit-url]: Git hooks framework
 - [Task][taskfile-url]: Task runner (optional)
+
+#### For CUDA support (arch)
+
+- nvidia drivers (check with nvidia-smi)
+- nvidia-container-toolkit
 
 #### For XPU support (arch)
 
@@ -133,30 +137,10 @@ export CONFIG_PATH="/path/to/custom/config.yaml"
 Run the API server:
 
 ```shell
-export CONFIG_PATH="config/configuration.yaml"
-export YOLO_CONFIG_DIR="/app/yolo" # writeable
 uv run src/inference.py
 ```
 
 The API server will start at `http://localhost:8000`.
-
-### Using Docker
-
-Build the Docker image:
-
-```shell
-docker buildx build --progress=plain -t ml-detector .
-```
-
-Run the Docker container:
-
-```shell
-docker run --rm -it \
-  -p 8000:8000 \
-  -v $(pwd)/config:/app/config \
-  -v $(pwd)/models:/app/models \
-  ml-detector
-```
 
 ### API Endpoints
 

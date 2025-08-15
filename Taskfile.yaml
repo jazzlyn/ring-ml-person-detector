@@ -5,11 +5,12 @@ version: "3"
 vars:
   PROJECT_DIR:
     sh: "git rev-parse --show-toplevel"
-  DEVENV_DIR: "{{.PROJECT_DIR}}/devenv"
 
 includes:
   check: .taskfiles/check.yaml
+  docker: .taskfiles/docker.yaml
   pre-commit: .taskfiles/pre-commit.yaml
+  test: .taskfiles/test.yaml
 
 tasks:
   lint:
