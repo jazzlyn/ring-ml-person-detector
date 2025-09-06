@@ -1,4 +1,4 @@
-FROM python:3.13.5@sha256:4ea77121eab13d9e71f2783d7505f5655b25bb7b2c263e8020aae3b555dbc0b2 AS base
+FROM python:3.13.7@sha256:18634e45b29c0dd1a9a3a3d0781f9f8a221fe32ee7a853db01e9120c710ef535 AS base
 COPY --from=ghcr.io/astral-sh/uv:0.8.15@sha256:a5727064a0de127bdb7c9d3c1383f3a9ac307d9f2d8a391edc7896c54289ced0 /uv /uvx /bin/
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -31,7 +31,7 @@ RUN uv run pylint src/
 
 # run tests (when available)
 
-FROM python:3.13.5-slim@sha256:4c2cf9917bd1cbacc5e9b07320025bdb7cdf2df7b0ceaccb55e9dd7e30987419 AS production
+FROM python:3.13.7-slim@sha256:27f90d79cc85e9b7b2560063ef44fa0e9eaae7a7c3f5a9f74563065c5477cc24 AS production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
       libgl1-mesa-glx \
