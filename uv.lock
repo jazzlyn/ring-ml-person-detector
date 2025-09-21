@@ -1,25 +1,11 @@
 version = 1
 revision = 3
-requires-python = "==3.13.5"
+requires-python = "==3.13.7"
 resolution-markers = [
-    "sys_platform == 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu'",
-    "sys_platform == 'darwin' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu'",
-    "platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')",
-    "sys_platform == 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "sys_platform == 'darwin' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "sys_platform == 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "sys_platform == 'darwin' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "platform_machine == 'aarch64' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu')",
+    "sys_platform == 'win32'",
+    "sys_platform == 'darwin'",
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 conflicts = [[
     { package = "ring-ml-person-detector", extra = "cpu" },
@@ -254,7 +240,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
-    { name = "umf", marker = "(sys_platform != 'darwin' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "umf", marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ae/d0/0d376a3eb3d5f8d0c0dd828a9f889e485d8ded1f7d501976c72916826cef/intel_cmplr_lib_ur-2025.0.4-py2.py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:d36d586721f0cb87b051aca1bf3f653ccee7960f15efb0132e5482d95c5b2c9b", size = 25158275, upload-time = "2024-12-12T12:03:36.653Z" },
@@ -319,9 +305,9 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
-    { name = "intel-cmplr-lib-rt", version = "2025.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'darwin' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "intel-cmplr-lib-ur", version = "2025.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'darwin' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "intel-cmplr-lic-rt", version = "2025.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'darwin' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "intel-cmplr-lib-rt", version = "2025.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "intel-cmplr-lib-ur", version = "2025.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "intel-cmplr-lic-rt", version = "2025.0.4", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/78/2b/3b99709cf8dd3304d05b853797a6fa962394ccf520536dc8e5eb9d3d9b1f/intel_sycl_rt-2025.0.4-py2.py3-none-manylinux_2_28_x86_64.whl", hash = "sha256:85c5fd6029f62e8361af1d9ddb0f6c6f9cf4912bbe9ad684f89e9e5842128879", size = 12356130, upload-time = "2024-12-12T12:03:18.87Z" },
@@ -645,7 +631,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
-    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c1/2e/ec5dda717eeb1de3afbbbb611ca556f9d6d057470759c6abd36d72f0063b/nvidia_cudnn_cu12-9.7.1.26-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:848a61d40ef3b32bd4e1fadb599f0cf04a4b942fbe5fb3be572ad75f9b8c53ef", size = 725862213, upload-time = "2025-02-06T22:14:57.169Z" },
@@ -679,7 +665,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/72/95/6157cb45a49f5090a470de42353a22a0ed5b13077886dca891b4b0e350fe/nvidia_cufft_cu12-11.3.3.41-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:68509dcd7e3306e69d0e2d8a6d21c8b25ed62e6df8aac192ce752f17677398b5", size = 193108626, upload-time = "2025-01-23T17:55:49.192Z" },
@@ -767,9 +753,9 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
-    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "nvidia-cusparse-cu12", version = "12.5.7.53", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "nvidia-cublas-cu12", version = "12.8.3.14", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "nvidia-cusparse-cu12", version = "12.5.7.53", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8c/ce/4214a892e804b20bf66d04f04a473006fc2d3dac158160ef85f1bc906639/nvidia_cusolver_cu12-11.7.2.55-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:0fd9e98246f43c15bee5561147ad235dfdf2d037f5d07c9d41af3f7f72feb7cc", size = 260094827, upload-time = "2025-01-23T17:58:17.586Z" },
@@ -803,7 +789,7 @@ resolution-markers = [
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
-    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "nvidia-nvjitlink-cu12", version = "12.8.61", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/2e/a2/313db0453087f5324a5900380ca2e57e050c8de76f407b5e11383dc762ae/nvidia_cusparse_cu12-12.5.7.53-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:d869c6146ca80f4305b62e02d924b4aaced936f8173e3cef536a67eed2a91af1", size = 291963692, upload-time = "2025-01-23T17:59:40.325Z" },
@@ -1311,10 +1297,9 @@ version = "2.7.1+cpu"
 source = { registry = "https://download.pytorch.org/whl/cpu" }
 resolution-markers = [
     "sys_platform == 'win32'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux'",
     "sys_platform == 'darwin'",
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
     { name = "filelock", marker = "extra == 'extra-23-ring-ml-person-detector-cpu' or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
@@ -1341,9 +1326,8 @@ source = { registry = "https://download.pytorch.org/whl/cu128" }
 resolution-markers = [
     "sys_platform == 'win32'",
     "sys_platform == 'darwin'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux'",
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux'",
 ]
 dependencies = [
     { name = "filelock", marker = "extra == 'extra-23-ring-ml-person-detector-cuda' or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
@@ -1448,10 +1432,9 @@ version = "0.22.1+cpu"
 source = { registry = "https://download.pytorch.org/whl/cpu" }
 resolution-markers = [
     "sys_platform == 'win32'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux'",
-    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux'",
     "sys_platform == 'darwin'",
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
+    "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
 ]
 dependencies = [
     { name = "numpy", marker = "extra == 'extra-23-ring-ml-person-detector-cpu' or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
@@ -1472,9 +1455,8 @@ source = { registry = "https://download.pytorch.org/whl/cu128" }
 resolution-markers = [
     "sys_platform == 'win32'",
     "sys_platform == 'darwin'",
-    "platform_machine == 'aarch64' and platform_python_implementation != 'CPython' and sys_platform == 'linux'",
+    "platform_machine == 'aarch64' and sys_platform == 'linux'",
     "(platform_machine != 'aarch64' and sys_platform == 'linux') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32')",
-    "platform_machine == 'aarch64' and platform_python_implementation == 'CPython' and sys_platform == 'linux'",
 ]
 dependencies = [
     { name = "numpy", marker = "extra == 'extra-23-ring-ml-person-detector-cuda' or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
@@ -1515,7 +1497,7 @@ name = "triton"
 version = "3.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "setuptools", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-xpu') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "setuptools", marker = "(platform_machine != 'aarch64' and sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-xpu') or (sys_platform != 'darwin' and sys_platform != 'linux' and sys_platform != 'win32' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-xpu') or (sys_platform != 'linux' and sys_platform != 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'darwin' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'win32' and extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/74/1f/dfb531f90a2d367d914adfee771babbd3f1a5b26c3f5fbc458dee21daa78/triton-3.3.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b89d846b5a4198317fec27a5d3a609ea96b6d557ff44b56c23176546023c4240", size = 155673035, upload-time = "2025-05-29T23:40:02.468Z" },
