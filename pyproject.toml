@@ -68,19 +68,12 @@ explicit = true
 [dependency-groups]
 dev = [
   "basedpyright==1.31.4",
-  "pylint==3.3.8",
   "ruff==0.13.1",
 ]
 
 [tool.basedpyright]
 # TODO: switch to "recommended"
 typeCheckingMode = "strict"
-
-[tool.pylint.FORMAT]
-max-line-length = 120
-
-[tool.pylint.MESSAGES_CONTROL]
-disable = ["fixme"]
 
 [tool.ruff]
 line-length = 120
@@ -89,6 +82,7 @@ line-length = 120
 extend-select = ["ALL"]
 fixable = ["ALL"]
 ignore = [
+  "COM812",  # trailing comma missing - conflicts with formatter
   "FIX",  # flake8-fixme
   "TD",   # flake8-todo
   "D203", # 1 blank line required before class docstring
