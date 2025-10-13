@@ -1120,7 +1120,7 @@ requires-dist = [
     { name = "torchvision", marker = "extra == 'cpu'", specifier = "==0.22.1+cpu", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "ring-ml-person-detector", extra = "cpu" } },
     { name = "torchvision", marker = "extra == 'cuda'", specifier = "==0.22.1+cu128", index = "https://download.pytorch.org/whl/cu128", conflict = { package = "ring-ml-person-detector", extra = "cuda" } },
     { name = "torchvision", marker = "extra == 'xpu'", specifier = "==0.22.1+xpu", index = "https://download.pytorch.org/whl/xpu", conflict = { package = "ring-ml-person-detector", extra = "xpu" } },
-    { name = "ultralytics", specifier = "==8.3.211" },
+    { name = "ultralytics", specifier = "==8.3.213" },
     { name = "uvicorn", specifier = "==0.37.0" },
 ]
 provides-extras = ["cpu", "cuda", "xpu"]
@@ -1527,7 +1527,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.3.211"
+version = "8.3.213"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib" },
@@ -1549,9 +1549,9 @@ dependencies = [
     { name = "torchvision", version = "0.22.1+xpu", source = { registry = "https://download.pytorch.org/whl/xpu" }, marker = "(extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra != 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra != 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "ultralytics-thop" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8e/07/cb12d30704c536b64cb97c2800cba77b00907e87ec65793351640b99b574/ultralytics-8.3.211.tar.gz", hash = "sha256:0f25599cda9d9acd6ed2d15cfcc43c426c619bf9da4a24b389dd92c5d3de025f", size = 920225, upload-time = "2025-10-11T21:51:04.827Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/42/ed/cbe65588ca43c1c8dbb7b726aee9d0471e1cb96095d170f01420c9339765/ultralytics-8.3.213.tar.gz", hash = "sha256:3bcbf64d857a86eb29fdb86b7630f225decd1da5f61afde70f114f80be73826d", size = 920985, upload-time = "2025-10-12T19:21:01.602Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5f/d7/74348cb94c359b6310b59c36ded22663d61333e15a5c937dad26e1308453/ultralytics-8.3.211-py3-none-any.whl", hash = "sha256:a2a17afa70c73a3edcb6687d05c189d52d1337734a383472b13ab98e1004f294", size = 1073336, upload-time = "2025-10-11T21:51:02.456Z" },
+    { url = "https://files.pythonhosted.org/packages/c0/09/3dbab41cedf9ebf1e2611473548a1ab33305474907e4fe0310449a98738c/ultralytics-8.3.213-py3-none-any.whl", hash = "sha256:5018dfd1537ab0d05dc84662b6bf5aaeef325ed22715080ebbe973caa6f4ebc4", size = 1074055, upload-time = "2025-10-12T19:20:59.192Z" },
 ]
 
 [[package]]
