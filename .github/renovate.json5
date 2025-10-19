@@ -5,4 +5,27 @@
     "github>techtales-io/renovate-config//github-actions/silent-automerge.json5",
     "github>techtales-io/renovate-config//pre-commit/silent-automerge.json5",
   ],
+  packageRules: [
+    {
+      description: "torch: group",
+      groupName: "torch",
+      matchDatasources: ["pypi"],
+      matchDepNames: ["torch", "torchvision", "pytorch-triton-xpu"],
+      semanticCommitScope: "{{groupName}}",
+      group: {
+        semanticCommitScope: "{{groupName}}",
+        commitMessageTopic: "group",
+      },
+      minimumGroupSize: 3,
+    },
+    {
+      matchDatasources: ["pypi"],
+      registryUrls: [
+        "https://pypi.org/simple",
+        "https://download.pytorch.org/whl/cpu",
+        "https://download.pytorch.org/whl/cu128",
+        "https://download.pytorch.org/whl/xpu",
+      ],
+    },
+  ],
 }
