@@ -3,14 +3,46 @@
 version: "3"
 
 tasks:
-  device:
-    desc: check if device is available for torch -- device
+  device-local:
+    desc: check if device is available for torch -- cuda | xpu
     silent: true
     cmds:
       - |
+        echo "checking {{.CLI_ARGS}} support on local machine..."
         python -c "
         import torch
         print('{{.CLI_ARGS}} available:', torch.{{.CLI_ARGS}}.is_available())
         if torch.{{.CLI_ARGS}}.is_available():
           print('{{.CLI_ARGS}} device count:', torch.{{.CLI_ARGS}}.device_count())
         "
+
+  device-docker:
+    desc: check if device is available for torch -- cuda | xpu
+    silent: true
+    cmds:
+      - |
+        echo "checking {{.CLI_ARGS}} support in docker container..."
+        docker run --rm -e TORCH_DEVICE={{.CLI_ARGS}} ml-detector:latest python -c "
+        import torch
+        print(f'PyTorch version: {torch.__version__}')
+        print('{{.CLI_ARGS}} available:', torch.{{.CLI_ARGS}}.is_available())
+        if torch.{{.CLI_ARGS}}.is_available():
+          print('{{.CLI_ARGS}} device count:', torch.{{.CLI_ARGS}}.device_count())
+          print(f'Cores: {torch.get_num_threads()}')
+        "
+
+  nvidia-local:
+    desc: get info on nvidia support in local machine
+    silent: true
+    cmds:
+      - |
+        echo "Checking NVIDIA support on local machine..."
+        nvidia-smi
+
+  nvidia-docker:
+    desc: get info on nvidia support in docker container
+    silent: true
+    cmds:
+      - |
+        echo "Checking NVIDIA support in Docker container..."
+        docker run --rm --runtime=nvidia -e TORCH_DEVICE=cuda ml-detector:latest nvidia-smi
