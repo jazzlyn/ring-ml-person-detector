@@ -3,7 +3,7 @@ name = "ring-ml-person-detector"
 version = "0.2.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.13.7"
+requires-python = "==3.13.*"
 dependencies = [
   "fastapi==0.119.0",
   "python-multipart==0.0.20",
@@ -13,16 +13,16 @@ dependencies = [
 
 [project.optional-dependencies]
 cpu = [
-  "torch==2.7.1",
-  "torchvision==0.22.1",
+  "torch==2.7.1+cpu",
+  "torchvision==0.22.1+cpu",
 ]
 cuda = [
-  "torch==2.7.1",
-  "torchvision==0.22.1",
+  "torch==2.7.1+cu128",
+  "torchvision==0.22.1+cu128",
 ]
 xpu = [
-  "torch==2.7.1",
-  "torchvision==0.22.1",
+  "torch==2.7.1+xpu",
+  "torchvision==0.22.1+xpu",
   "pytorch-triton-xpu==3.3.1",
 ]
 
