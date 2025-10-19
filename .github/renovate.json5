@@ -20,12 +20,8 @@
     },
     {
       matchDatasources: ["pypi"],
-      registryUrls: [
-        "https://pypi.org/simple",
-        "https://download.pytorch.org/whl/cpu",
-        "https://download.pytorch.org/whl/cu128",
-        "https://download.pytorch.org/whl/xpu",
-      ],
+      matchJsonata: ["managerData.depGroup = 'xpu'"],
+      registryUrls: ["https://download.pytorch.org/whl/xpu"],
     },
   ],
 }
