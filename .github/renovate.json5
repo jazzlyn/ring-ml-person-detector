@@ -20,6 +20,16 @@
     },
     {
       matchDatasources: ["pypi"],
+      matchJsonata: ["managerData.depGroup = 'cpu'"],
+      registryUrls: ["https://download.pytorch.org/whl/cpu"],
+    },
+    {
+      matchDatasources: ["pypi"],
+      matchJsonata: ["managerData.depGroup = 'cuda'"],
+      registryUrls: ["https://download.pytorch.org/whl/cu128"],
+    },
+    {
+      matchDatasources: ["pypi"],
       matchJsonata: ["managerData.depGroup = 'xpu'"],
       registryUrls: ["https://download.pytorch.org/whl/xpu"],
     },
