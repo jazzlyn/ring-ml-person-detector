@@ -27,6 +27,10 @@ xpu = [
 ]
 
 [tool.uv]
+required-environments = [
+  "sys_platform == 'linux'",
+]
+
 conflicts = [
   [
     { extra = "cpu" },
