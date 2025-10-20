@@ -27,9 +27,9 @@ xpu = [
 ]
 
 [tool.uv]
-environments = [
-  "sys_platform == 'linux'",
-]
+# environments = [
+#   "sys_platform == 'linux'",
+# ]
 
 conflicts = [
   [
@@ -43,15 +43,15 @@ conflicts = [
 torch = [
   { index = "torch-cpu", extra = "cpu" },
   { index = "torch-cuda", extra = "cuda" },
-  { index = "torch-xpu", extra = "xpu", marker = "sys_platform == 'linux'" },
+  { index = "torch-xpu", extra = "xpu" },
 ]
 torchvision = [
   { index = "torch-cpu", extra = "cpu" },
   { index = "torch-cuda", extra = "cuda" },
-  { index = "torch-xpu", extra = "xpu", marker = "sys_platform == 'linux'" },
+  { index = "torch-xpu", extra = "xpu" },
 ]
 pytorch-triton-xpu = [
-  { index = "torch-xpu", extra = "xpu", marker = "sys_platform == 'linux'" },
+  { index = "torch-xpu", extra = "xpu" },
 ]
 
 [[tool.uv.index]]
