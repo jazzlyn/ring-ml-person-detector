@@ -33,5 +33,23 @@
       matchJsonata: ["managerData.depGroup = 'xpu'"],
       registryUrls: ["https://download.pytorch.org/whl/xpu"],
     },
+    {
+      description: "torch: exclude specific versions",
+      matchDatasources: ["pypi"],
+      matchDepNames: ["torch"],
+      allowedVersions: "!/2\\.9\\.0\\$/",
+    },
+    {
+      description: "torchvision: exclude specific versions",
+      matchDatasources: ["pypi"],
+      matchDepNames: ["torchvision"],
+      allowedVersions: "!/0\\.24\\.0\\$/",
+    },
+    {
+      description: "pytorch-triton-xpu: exclude specific versions",
+      matchDatasources: ["pypi"],
+      matchDepNames: ["pytorch-triton-xpu"],
+      allowedVersions: "!/3\\.5\\.0$/",
+    },
   ],
 }
