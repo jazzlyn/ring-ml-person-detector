@@ -13,17 +13,17 @@ dependencies = [
 
 [project.optional-dependencies]
 cpu = [
-  "torch==2.7.1+cpu",
-  "torchvision==0.22.1+cpu",
+  "torch==2.8.0+cpu",
+  "torchvision==0.23.0+cpu",
 ]
 cuda = [
-  "torch==2.7.1+cu128",
-  "torchvision==0.22.1+cu128",
+  "torch==2.8.0+cu128",
+  "torchvision==0.23.0+cu128",
 ]
 xpu = [
-  "torch==2.7.1+xpu",
-  "torchvision==0.22.1+xpu",
-  "pytorch-triton-xpu==3.3.1",
+  "torch==2.8.0+xpu",
+  "torchvision==0.23.0+xpu",
+  "pytorch-triton-xpu==3.4.0",
 ]
 
 [tool.uv]
