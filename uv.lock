@@ -998,7 +998,7 @@ requires-dist = [
     { name = "torchvision", marker = "extra == 'cpu'", specifier = "==0.23.0+cpu", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "ring-ml-person-detector", extra = "cpu" } },
     { name = "torchvision", marker = "extra == 'cuda'", specifier = "==0.23.0+cu128", index = "https://download.pytorch.org/whl/cu128", conflict = { package = "ring-ml-person-detector", extra = "cuda" } },
     { name = "torchvision", marker = "extra == 'xpu'", specifier = "==0.23.0+xpu", index = "https://download.pytorch.org/whl/xpu", conflict = { package = "ring-ml-person-detector", extra = "xpu" } },
-    { name = "ultralytics", specifier = "==8.3.220" },
+    { name = "ultralytics", specifier = "==8.3.221" },
     { name = "uvicorn", specifier = "==0.38.0" },
 ]
 provides-extras = ["cpu", "cuda", "xpu"]
@@ -1428,7 +1428,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.3.220"
+version = "8.3.221"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib", marker = "sys_platform == 'linux' or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
@@ -1450,9 +1450,9 @@ dependencies = [
     { name = "torchvision", version = "0.24.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "ultralytics-thop", marker = "sys_platform == 'linux' or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/aa/4d/1dd8ebd7d02e1ff73bf098852137d71be330d947b17ebe588e7dc367de2a/ultralytics-8.3.220.tar.gz", hash = "sha256:097a6d5686c3eeff246c865b668d818407d9c24b10140d6c4e68bd9867116f86", size = 924818, upload-time = "2025-10-22T13:22:21.344Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/49/18/efb1d81713a1c47cc23e42f80ec22bfa3a30d7b4b7a02e690fa21c98ad42/ultralytics-8.3.221.tar.gz", hash = "sha256:0339c48b6ab64f93c298b312cd411d3fa5c5f3f3c156316ef583f66e9825f866", size = 924482, upload-time = "2025-10-24T09:36:10.145Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4a/ba/c8c6bfead866e79b2dc5644145cbad41531e9c69b74e911e46c847312222/ultralytics-8.3.220-py3-none-any.whl", hash = "sha256:2c59923cc2a1ed8f5ebdf865820c5f9829c721f6a7933712bee39519bad3caec", size = 1078083, upload-time = "2025-10-22T13:22:18.372Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/32/f57d9508676578e170dcf559c6fc02b4f716a9968948925a9eb1944e8578/ultralytics-8.3.221-py3-none-any.whl", hash = "sha256:ee8d3715b1e14d4ad0305c3b1c085ff79901a8cf1aa011988838bd4c61f18b17", size = 1077916, upload-time = "2025-10-24T09:36:06.499Z" },
 ]
 
 [[package]]
