@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = "==3.13.*"
 dependencies = [
-  "fastapi==0.120.1",
+  "fastapi==0.120.4",
   "python-multipart==0.0.20",
   "ultralytics==8.3.222",
   "uvicorn==0.38.0",
