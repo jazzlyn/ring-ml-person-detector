@@ -1,4 +1,4 @@
-FROM python:3.13.7@sha256:fe841081ec55481496a4ab25e538833741295d57d2abdec8d38d74d65fb4715b AS base
+FROM python:3.14.0@sha256:6942ebef735aad5f708ef9c5e750cbe37dbc7751cee35c140e33764e34843ab9 AS base
 COPY --from=ghcr.io/astral-sh/uv:0.9.11@sha256:5aa820129de0a600924f166aec9cb51613b15b68f1dcd2a02f31a500d2ede568 /uv /uvx /bin/
 
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN ruff format --check .
 
 RUN uv sync --no-dev --frozen --extra cpu
 
-FROM python:3.13.7-slim@sha256:5f55cdf0c5d9dc1a415637a5ccc4a9e18663ad203673173b8cda8f8dcacef689 AS production
+FROM python:3.14.0-slim@sha256:0aecac02dc3d4c5dbb024b753af084cafe41f5416e02193f1ce345d671ec966e AS production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
       libgl1 \
