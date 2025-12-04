@@ -1,5 +1,5 @@
 FROM python:3.13.7@sha256:fe841081ec55481496a4ab25e538833741295d57d2abdec8d38d74d65fb4715b AS base
-COPY --from=ghcr.io/astral-sh/uv:0.9.13@sha256:f07d1bf7b1fb4b983eed2b31320e25a2a76625bdf83d5ff0208fe105d4d8d2f5 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.9.15@sha256:4c1ad814fe658851f50ff95ecd6948673fffddb0d7994bdb019dcb58227abd52 /uv /uvx /bin/
 
 WORKDIR /app
 
