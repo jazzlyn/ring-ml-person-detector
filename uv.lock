@@ -979,16 +979,13 @@ dependencies = [
 [package.optional-dependencies]
 cpu = [
     { name = "torch", version = "2.8.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'linux'" },
-    { name = "torchvision", version = "0.23.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'linux'" },
 ]
 cuda = [
     { name = "torch", version = "2.8.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux'" },
-    { name = "torchvision", version = "0.23.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'linux'" },
 ]
 xpu = [
     { name = "pytorch-triton-xpu", marker = "sys_platform == 'linux'" },
     { name = "torch", version = "2.8.0+xpu", source = { registry = "https://download.pytorch.org/whl/xpu" }, marker = "sys_platform == 'linux'" },
-    { name = "torchvision", version = "0.23.0+xpu", source = { registry = "https://download.pytorch.org/whl/xpu" }, marker = "sys_platform == 'linux'" },
 ]
 
 [package.dev-dependencies]
@@ -1005,9 +1002,6 @@ requires-dist = [
     { name = "torch", marker = "extra == 'cpu'", specifier = "==2.8.0+cpu", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "ring-ml-person-detector", extra = "cpu" } },
     { name = "torch", marker = "extra == 'cuda'", specifier = "==2.8.0+cu128", index = "https://download.pytorch.org/whl/cu128", conflict = { package = "ring-ml-person-detector", extra = "cuda" } },
     { name = "torch", marker = "extra == 'xpu'", specifier = "==2.8.0+xpu", index = "https://download.pytorch.org/whl/xpu", conflict = { package = "ring-ml-person-detector", extra = "xpu" } },
-    { name = "torchvision", marker = "extra == 'cpu'", specifier = "==0.23.0+cpu", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "ring-ml-person-detector", extra = "cpu" } },
-    { name = "torchvision", marker = "extra == 'cuda'", specifier = "==0.23.0+cu128", index = "https://download.pytorch.org/whl/cu128", conflict = { package = "ring-ml-person-detector", extra = "cuda" } },
-    { name = "torchvision", marker = "extra == 'xpu'", specifier = "==0.23.0+xpu", index = "https://download.pytorch.org/whl/xpu", conflict = { package = "ring-ml-person-detector", extra = "xpu" } },
     { name = "ultralytics", specifier = "==8.3.235" },
     { name = "uvicorn", specifier = "==0.38.0" },
 ]
@@ -1304,62 +1298,28 @@ wheels = [
 
 [[package]]
 name = "torchvision"
-version = "0.23.0+cpu"
-source = { registry = "https://download.pytorch.org/whl/cpu" }
+version = "0.23.0"
+source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "platform_machine == 'aarch64' and sys_platform == 'linux'",
     "platform_machine != 'aarch64' and sys_platform == 'linux'",
 ]
 dependencies = [
-    { name = "numpy", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "pillow", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "numpy", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "pillow", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "torch", version = "2.8.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-]
-wheels = [
-    { url = "https://download.pytorch.org/whl/cpu/torchvision-0.23.0%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:dea90a67d60a5366b0358a0b8d6bf267805278697d6fd950cf0e31139e56d1be" },
-    { url = "https://download.pytorch.org/whl/cpu/torchvision-0.23.0%2Bcpu-cp313-cp313-win_amd64.whl", hash = "sha256:82928788025170c62e7df1120dcdc0cd175bfc31c08374613ce6d1a040bc0cda" },
-    { url = "https://download.pytorch.org/whl/cpu/torchvision-0.23.0%2Bcpu-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:474d77adbbbed5166db3e5636b4b4ae3399c66ef5bfa12536e254b32259c90c0" },
-    { url = "https://download.pytorch.org/whl/cpu/torchvision-0.23.0%2Bcpu-cp313-cp313t-win_amd64.whl", hash = "sha256:8d6a47e23d7896f0ef9aa7ea7179eb6324e82438aa66d19884c2020d0646b104" },
-]
-
-[[package]]
-name = "torchvision"
-version = "0.23.0+cu128"
-source = { registry = "https://download.pytorch.org/whl/cu128" }
-resolution-markers = [
-    "platform_machine == 'aarch64' and sys_platform == 'linux'",
-    "platform_machine != 'aarch64' and sys_platform == 'linux'",
-]
-dependencies = [
-    { name = "numpy", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "pillow", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "torch", version = "2.8.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-]
-wheels = [
-    { url = "https://download.pytorch.org/whl/cu128/torchvision-0.23.0%2Bcu128-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:c63982f1973ba677b37e6663df0e07cb5381459b6f0572c2ca95eebd8dfeb742" },
-    { url = "https://download.pytorch.org/whl/cu128/torchvision-0.23.0%2Bcu128-cp313-cp313-win_amd64.whl", hash = "sha256:f69174bc69474bd4d1405bac3ebd35bb39c8267ce6b8a406070cb3149c72e3b8" },
-    { url = "https://download.pytorch.org/whl/cu128/torchvision-0.23.0%2Bcu128-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:0d6ff6489eb71e4c0bb08cf7cb253298c2520458b1bd67036733652acfa87f00" },
-    { url = "https://download.pytorch.org/whl/cu128/torchvision-0.23.0%2Bcu128-cp313-cp313t-win_amd64.whl", hash = "sha256:91fd897fb6fefaf25ec56897391b448eff73f28a7e2ab7660886ece85c865ec6" },
-]
-
-[[package]]
-name = "torchvision"
-version = "0.23.0+xpu"
-source = { registry = "https://download.pytorch.org/whl/xpu" }
-resolution-markers = [
-    "platform_machine == 'aarch64' and sys_platform == 'linux'",
-    "platform_machine != 'aarch64' and sys_platform == 'linux'",
-]
-dependencies = [
-    { name = "numpy", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "pillow", marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "torch", version = "2.8.0+xpu", source = { registry = "https://download.pytorch.org/whl/xpu" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
 wheels = [
-    { url = "https://download.pytorch.org/whl/xpu/torchvision-0.23.0%2Bxpu-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:e2109ae773dad27b98ca17681044b4f876563c37f2382b75de3a371399edcff8" },
-    { url = "https://download.pytorch.org/whl/xpu/torchvision-0.23.0%2Bxpu-cp313-cp313-win_amd64.whl", hash = "sha256:71dc4a6421742ed1e7f585b04a100ad53615c341fbccfbc255aefb38ea9091da" },
-    { url = "https://download.pytorch.org/whl/xpu/torchvision-0.23.0%2Bxpu-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:89a6769ff7a0a0bb7b05dfabbf3822ea6487b4078ced9a8074ae7c559c0d27ed" },
-    { url = "https://download.pytorch.org/whl/xpu/torchvision-0.23.0%2Bxpu-cp313-cp313t-win_amd64.whl", hash = "sha256:76b3ae39809041699af92b678fac61abec571b7ba918b95e5d4441fc1c862679" },
+    { url = "https://files.pythonhosted.org/packages/91/37/45a5b9407a7900f71d61b2b2f62db4b7c632debca397f205fdcacb502780/torchvision-0.23.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:1c37e325e09a184b730c3ef51424f383ec5745378dc0eca244520aca29722600", size = 1856886, upload-time = "2025-08-06T14:58:05.491Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/da/a06c60fc84fc849377cf035d3b3e9a1c896d52dbad493b963c0f1cdd74d0/torchvision-0.23.0-cp313-cp313-manylinux_2_28_aarch64.whl", hash = "sha256:2f7fd6c15f3697e80627b77934f77705f3bc0e98278b989b2655de01f6903e1d", size = 2353112, upload-time = "2025-08-06T14:58:26.265Z" },
+    { url = "https://files.pythonhosted.org/packages/a0/27/5ce65ba5c9d3b7d2ccdd79892ab86a2f87ac2ca6638f04bb0280321f1a9c/torchvision-0.23.0-cp313-cp313-manylinux_2_28_x86_64.whl", hash = "sha256:a76fafe113b2977be3a21bf78f115438c1f88631d7a87203acb3dd6ae55889e6", size = 8627658, upload-time = "2025-08-06T14:58:15.999Z" },
+    { url = "https://files.pythonhosted.org/packages/1f/e4/028a27b60aa578a2fa99d9d7334ff1871bb17008693ea055a2fdee96da0d/torchvision-0.23.0-cp313-cp313-win_amd64.whl", hash = "sha256:07d069cb29691ff566e3b7f11f20d91044f079e1dbdc9d72e0655899a9b06938", size = 1600749, upload-time = "2025-08-06T14:58:10.719Z" },
+    { url = "https://files.pythonhosted.org/packages/05/35/72f91ad9ac7c19a849dedf083d347dc1123f0adeb401f53974f84f1d04c8/torchvision-0.23.0-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:2df618e1143805a7673aaf82cb5720dd9112d4e771983156aaf2ffff692eebf9", size = 2047192, upload-time = "2025-08-06T14:58:11.813Z" },
+    { url = "https://files.pythonhosted.org/packages/1d/9d/406cea60a9eb9882145bcd62a184ee61e823e8e1d550cdc3c3ea866a9445/torchvision-0.23.0-cp313-cp313t-manylinux_2_28_aarch64.whl", hash = "sha256:2a3299d2b1d5a7aed2d3b6ffb69c672ca8830671967eb1cee1497bacd82fe47b", size = 2359295, upload-time = "2025-08-06T14:58:17.469Z" },
+    { url = "https://files.pythonhosted.org/packages/2b/f4/34662f71a70fa1e59de99772142f22257ca750de05ccb400b8d2e3809c1d/torchvision-0.23.0-cp313-cp313t-manylinux_2_28_x86_64.whl", hash = "sha256:76bc4c0b63d5114aa81281390f8472a12a6a35ce9906e67ea6044e5af4cab60c", size = 8800474, upload-time = "2025-08-06T14:58:22.53Z" },
+    { url = "https://files.pythonhosted.org/packages/6e/f5/b5a2d841a8d228b5dbda6d524704408e19e7ca6b7bb0f24490e081da1fa1/torchvision-0.23.0-cp313-cp313t-win_amd64.whl", hash = "sha256:b9e2dabf0da9c8aa9ea241afb63a8f3e98489e706b22ac3f30416a1be377153b", size = 1527667, upload-time = "2025-08-06T14:58:14.446Z" },
 ]
 
 [[package]]
@@ -1454,9 +1414,7 @@ dependencies = [
     { name = "torch", version = "2.8.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "torch", version = "2.8.0+xpu", source = { registry = "https://download.pytorch.org/whl/xpu" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "torch", version = "2.9.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "torchvision", version = "0.23.0+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "torchvision", version = "0.23.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
-    { name = "torchvision", version = "0.23.0+xpu", source = { registry = "https://download.pytorch.org/whl/xpu" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
+    { name = "torchvision", version = "0.23.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cpu') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-cuda') or (sys_platform == 'linux' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "torchvision", version = "0.24.0", source = { registry = "https://pypi.org/simple" }, marker = "(sys_platform == 'linux' and extra != 'extra-23-ring-ml-person-detector-cpu' and extra != 'extra-23-ring-ml-person-detector-cuda' and extra != 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
     { name = "ultralytics-thop", marker = "sys_platform == 'linux' or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-cuda') or (extra == 'extra-23-ring-ml-person-detector-cpu' and extra == 'extra-23-ring-ml-person-detector-xpu') or (extra == 'extra-23-ring-ml-person-detector-cuda' and extra == 'extra-23-ring-ml-person-detector-xpu')" },
 ]
