@@ -70,6 +70,12 @@ jobs:
       - name: sign the published docker image
         run: cosign sign --yes ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.build-and-push.outputs.digest }}
 
+  create-release:
+    needs: docker-build-push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
       # https://github.com/marketplace/actions/gh-release
       - name: create release
         uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
