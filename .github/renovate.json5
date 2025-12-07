@@ -10,13 +10,12 @@
       description: "torch: group",
       groupName: "torch",
       matchDatasources: ["pypi"],
-      matchDepNames: ["torch", "torchvision", "pytorch-triton-xpu"],
+      matchDepNames: ["torch", "pytorch-triton-xpu"],
       semanticCommitScope: "{{groupName}}",
       group: {
         semanticCommitScope: "{{groupName}}",
         commitMessageTopic: "group",
       },
-      minimumGroupSize: 3,
     },
     {
       matchDatasources: ["pypi"],
