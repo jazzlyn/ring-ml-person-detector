@@ -4,5 +4,5 @@
   gitAuthor: "jazzlyn-bot <134550475+jazzlyn-bot[bot]@users.noreply.github.com>",
   platform: "github",
   platformCommit: "enabled",
-  repositories: ["jazzlyn/ring-ml-person-detector"],
+  repositories: ["jazzlyn/ml-detector"],
 }
