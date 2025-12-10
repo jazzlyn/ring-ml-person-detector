@@ -3,8 +3,8 @@
 
 # Allow files and directories
 !/src
-!/README.md
 !/pyproject.toml
+!/README.md
 !/uv.lock
 
 
