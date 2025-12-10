@@ -17,7 +17,6 @@ tasks:
           -p 8000:8000 \
           -v ${PWD}/config:/app/config \
           -v ${PWD}/models:/app/models \
-          -e YOLO_CONFIG_DIR=/tmp/yolo \
           --runtime=nvidia \
           ml-detector:latest
 
@@ -29,5 +28,4 @@ tasks:
           --user $(id -u):$(id -g) \
           -v ${PWD}/config:/app/config \
           -v ${PWD}/models:/app/models \
-          -e YOLO_CONFIG_DIR=/tmp/yolo \
           ml-detector:latest /bin/bash
