@@ -3,7 +3,7 @@ name = "ml-detector"
 version = "v0.3.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = "==3.13.*"
+requires-python = "==3.14.*"
 dependencies = [
   "fastapi==0.124.4",
   "python-multipart==0.0.20",
