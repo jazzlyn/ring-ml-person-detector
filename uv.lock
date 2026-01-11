@@ -462,7 +462,7 @@ requires-dist = [
     { name = "torch", marker = "extra == 'cpu'", specifier = "==2.9.1+cpu", index = "https://download.pytorch.org/whl/cpu", conflict = { package = "ml-detector", extra = "cpu" } },
     { name = "torch", marker = "extra == 'cuda'", specifier = "==2.9.1+cu128", index = "https://download.pytorch.org/whl/cu128", conflict = { package = "ml-detector", extra = "cuda" } },
     { name = "torch", marker = "extra == 'xpu'", specifier = "==2.9.1+xpu", index = "https://download.pytorch.org/whl/xpu", conflict = { package = "ml-detector", extra = "xpu" } },
-    { name = "ultralytics", specifier = "==8.3.250" },
+    { name = "ultralytics", specifier = "==8.3.252" },
     { name = "uvicorn", specifier = "==0.40.0" },
 ]
 provides-extras = ["cpu", "cuda", "xpu"]
@@ -1340,7 +1340,7 @@ wheels = [
 
 [[package]]
 name = "ultralytics"
-version = "8.3.250"
+version = "8.3.252"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "matplotlib", marker = "sys_platform == 'linux' or (extra == 'extra-11-ml-detector-cpu' and extra == 'extra-11-ml-detector-cuda') or (extra == 'extra-11-ml-detector-cpu' and extra == 'extra-11-ml-detector-xpu') or (extra == 'extra-11-ml-detector-cuda' and extra == 'extra-11-ml-detector-xpu')" },
@@ -1359,9 +1359,9 @@ dependencies = [
     { name = "torchvision", marker = "sys_platform == 'linux' or (extra == 'extra-11-ml-detector-cpu' and extra == 'extra-11-ml-detector-cuda') or (extra == 'extra-11-ml-detector-cpu' and extra == 'extra-11-ml-detector-xpu') or (extra == 'extra-11-ml-detector-cuda' and extra == 'extra-11-ml-detector-xpu')" },
     { name = "ultralytics-thop", marker = "sys_platform == 'linux' or (extra == 'extra-11-ml-detector-cpu' and extra == 'extra-11-ml-detector-cuda') or (extra == 'extra-11-ml-detector-cpu' and extra == 'extra-11-ml-detector-xpu') or (extra == 'extra-11-ml-detector-cuda' and extra == 'extra-11-ml-detector-xpu')" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d7/80/b59ee8aac9b46f0cd933a571d10925a7ce9def0d41dc9ddba335143bf520/ultralytics-8.3.250.tar.gz", hash = "sha256:af1a99afbfc23d8c888811bebe7930b0bdc2ae7a2f71ee9f412b77568bfc0297", size = 992533, upload-time = "2026-01-08T18:48:38.45Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d9/6e/77cbcc445edfc51e9e5278f52757625ec57455a4ef163ea698f827521a6c/ultralytics-8.3.252.tar.gz", hash = "sha256:0973d55c84e77bc729d49217da183914401954cb61e8c0ff059082963d88fa73", size = 993056, upload-time = "2026-01-10T16:36:12.307Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/cb/7e/17af4263d4e139a0153bdf60b590ecad079df992545af35ea356a602548a/ultralytics-8.3.250-py3-none-any.whl", hash = "sha256:3578a10095b54b8707c622ad15588140eb5bcf4ff99629cff544faa04b39b7b3", size = 1156491, upload-time = "2026-01-08T18:48:35.335Z" },
+    { url = "https://files.pythonhosted.org/packages/57/2c/84f61b8fd8a594c2c3e54560575af2580da17d4647de7bc1ca7c55bf37f6/ultralytics-8.3.252-py3-none-any.whl", hash = "sha256:7b30f8fd5ac03e6bf91a2bf8e27e20814d7e8efad431cd6cd25c7b950c397ccc", size = 1157267, upload-time = "2026-01-10T16:36:07.876Z" },
 ]
 
 [[package]]
